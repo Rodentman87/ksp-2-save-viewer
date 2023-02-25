@@ -1,5 +1,6 @@
 import { EuiDataGrid, EuiDataGridColumn, EuiPageTemplate } from "@elastic/eui";
 import React from "react";
+import useLocalStorageState from "use-local-storage-state";
 import { useSaveFile } from "../SaveFileContext";
 
 const columns: EuiDataGridColumn[] = [
@@ -14,6 +15,7 @@ const columns: EuiDataGridColumn[] = [
 	{
 		id: "location",
 		displayAsText: "Location",
+		isSortable: false,
 	},
 	{
 		id: "speed",
@@ -22,15 +24,43 @@ const columns: EuiDataGridColumn[] = [
 	{
 		id: "missionTime",
 		displayAsText: "Mission Time",
+		schema: "numeric",
 	},
 	{
 		id: "isDebris",
 		displayAsText: "Is Debris",
+		isSortable: false,
 	},
 ];
 
 export const Vessels: React.FC = () => {
 	const saveFile = useSaveFile();
+
+	const [visibleColumns, setVisibleColumns] = useLocalStorageState(
+		"vesselsVisibleColumns",
+		{
+			defaultValue: columns.map((c) => c.id),
+			serializer: {
+				stringify: (value) => JSON.stringify(value),
+				parse: (value) => JSON.parse(value),
+			},
+		}
+	);
+
+	const [sort, setSort] = useLocalStorageState<
+		{ id: string; direction: "asc" | "desc" }[]
+	>("vesselsSort", {
+		defaultValue: [
+			{
+				id: "name",
+				direction: "asc",
+			},
+		],
+		serializer: {
+			stringify: (value) => JSON.stringify(value),
+			parse: (value) => JSON.parse(value),
+		},
+	});
 
 	return (
 		<EuiPageTemplate grow>
@@ -39,11 +69,10 @@ export const Vessels: React.FC = () => {
 				<EuiDataGrid
 					color="dark"
 					aria-label="Vessels"
-					toolbarVisibility={false}
 					columns={columns}
 					columnVisibility={{
-						visibleColumns: columns.map((c) => c.id),
-						setVisibleColumns: () => {},
+						visibleColumns,
+						setVisibleColumns,
 					}}
 					rowCount={saveFile.Vessels.length}
 					renderCellValue={({ rowIndex, columnId }) => {
@@ -73,6 +102,10 @@ export const Vessels: React.FC = () => {
 						}
 					}}
 					inMemory={{ level: "sorting" }}
+					sorting={{
+						columns: sort,
+						onSort: setSort,
+					}}
 				/>
 			</EuiPageTemplate.Section>
 		</EuiPageTemplate>

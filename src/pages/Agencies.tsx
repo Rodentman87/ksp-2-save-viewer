@@ -1,5 +1,6 @@
 import { EuiDataGrid, EuiDataGridColumn, EuiPageTemplate } from "@elastic/eui";
 import React from "react";
+import useLocalStorageState from "use-local-storage-state";
 import { useSaveFile } from "../SaveFileContext";
 
 const columns: EuiDataGridColumn[] = [
@@ -10,11 +11,38 @@ const columns: EuiDataGridColumn[] = [
 	{
 		id: "colors",
 		displayAsText: "Colors",
+		isSortable: false,
 	},
 ];
 
 export const Agencies: React.FC = () => {
 	const saveFile = useSaveFile();
+
+	const [visibleColumns, setVisibleColumns] = useLocalStorageState(
+		"agenciesVisibleColumns",
+		{
+			defaultValue: columns.map((c) => c.id),
+			serializer: {
+				stringify: (value) => JSON.stringify(value),
+				parse: (value) => JSON.parse(value),
+			},
+		}
+	);
+
+	const [sort, setSort] = useLocalStorageState<
+		{ id: string; direction: "asc" | "desc" }[]
+	>("agenciesSort", {
+		defaultValue: [
+			{
+				id: "name",
+				direction: "asc",
+			},
+		],
+		serializer: {
+			stringify: (value) => JSON.stringify(value),
+			parse: (value) => JSON.parse(value),
+		},
+	});
 
 	return (
 		<EuiPageTemplate grow>
@@ -23,11 +51,10 @@ export const Agencies: React.FC = () => {
 				<EuiDataGrid
 					color="dark"
 					aria-label="Agencies"
-					toolbarVisibility={false}
 					columns={columns}
 					columnVisibility={{
-						visibleColumns: columns.map((c) => c.id),
-						setVisibleColumns: () => {},
+						visibleColumns,
+						setVisibleColumns,
 					}}
 					rowCount={saveFile.Agencies.length}
 					renderCellValue={({ rowIndex, columnId, setCellProps }) => {
@@ -48,6 +75,7 @@ export const Agencies: React.FC = () => {
 						}
 					}}
 					inMemory={{ level: "sorting" }}
+					sorting={{ columns: sort, onSort: setSort }}
 				/>
 			</EuiPageTemplate.Section>
 		</EuiPageTemplate>
