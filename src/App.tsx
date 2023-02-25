@@ -1,4 +1,4 @@
-import { EuiProvider } from "@elastic/eui";
+import { EuiProvider, EuiToolTip, EuiIcon } from "@elastic/eui";
 import "@elastic/eui/dist/eui_theme_dark.css";
 // import "@elastic/eui/dist/eui_theme_light.css";
 import { AnimatePresence } from "framer-motion";
@@ -93,6 +93,9 @@ function App() {
 							<div className="p-6 rounded-md bg-white shadow-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 								<h1 className="text-2xl font-bold mb-2 text-black">
 									Please Upload a Save File (.json)
+									<EuiToolTip position="right" content="Saves can be found in 'users/[username]/AppData/LocalLow/Intercept Games/Kerbal Space Program 2/Saves/SinglePlayer/[savename]/'">
+										<EuiIcon tabIndex="0" type="questionInCircle"/>
+									</EuiToolTip>
 								</h1>
 								<input
 									type="file"
