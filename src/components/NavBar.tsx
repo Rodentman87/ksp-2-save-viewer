@@ -50,6 +50,12 @@ export const NavBar: React.FC = () => {
 						{
 							items: [
 								<EuiHeaderLink
+									target="_blank"
+									href="https://github.com/Rodentman87/ksp-2-save-viewer"
+								>
+									Source
+								</EuiHeaderLink>,
+								<EuiHeaderLink
 									onClick={() => {
 										navigate("/licenses");
 									}}
