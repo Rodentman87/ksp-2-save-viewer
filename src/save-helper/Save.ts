@@ -44,6 +44,23 @@ export class Save implements SaveFile_0_1_0 {
 		this.TravelLogData = saveFile.TravelLogData;
 	}
 
+	export() {
+		const element = document.createElement("a");
+		element.setAttribute(
+			"href",
+			"data:text/plain;charset=utf-8," +
+				encodeURIComponent(JSON.stringify(this))
+		);
+		element.setAttribute("download", this.Metadata.Name + ".json");
+
+		element.style.display = "none";
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
+	}
+
 	getPlayer(id: number) {
 		return this.CampaignPlayers.find((player) => player.PlayerId === id);
 	}

@@ -2,10 +2,13 @@ import { EuiHeader, EuiHeaderLink, EuiHeaderLogo } from "@elastic/eui";
 import { motion } from "framer-motion";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSaveFile } from "../SaveFileContext";
 
 export const NavBar: React.FC = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+
+	const save = useSaveFile();
 
 	return (
 		<>
@@ -49,6 +52,13 @@ export const NavBar: React.FC = () => {
 						},
 						{
 							items: [
+								<EuiHeaderLink
+									onClick={() => {
+										save.export();
+									}}
+								>
+									Export Save
+								</EuiHeaderLink>,
 								<EuiHeaderLink
 									target="_blank"
 									href="https://github.com/Rodentman87/ksp-2-save-viewer"
