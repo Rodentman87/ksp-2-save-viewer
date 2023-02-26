@@ -1,4 +1,3 @@
-import { Color, Vector3D } from "../types/common/Common";
 import {
 	SaveAgency_0_1_0,
 	SaveCampaignPlayer_0_1_0,
@@ -51,41 +50,5 @@ export class Save implements SaveFile_0_1_0 {
 
 	getTimeSince(time: number) {
 		return this.Metadata.UniverseTime - time;
-	}
-
-	formatTime(time: number) {
-		const seconds = Math.floor(time % 60);
-		const minutes = Math.floor(time / 60) % 60;
-		const hours = Math.floor(time / 3600) % 24;
-		const days = Math.floor(time / 86400) % 365;
-		const years = Math.floor(time / 31536000);
-		if (years > 0) {
-			return `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s`;
-		}
-		if (days > 0) {
-			return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-		}
-		if (hours > 0) {
-			return `${hours}h ${minutes}m ${seconds}s`;
-		}
-		if (minutes > 0) {
-			return `${minutes}m ${seconds}s`;
-		}
-		return `${seconds}s`;
-	}
-
-	formatSpeed(speed: Vector3D) {
-		const fullSpeed = Math.sqrt(
-			speed.x * speed.x + speed.y * speed.y + speed.z * speed.z
-		);
-		return `${fullSpeed.toFixed(2)}m/s`;
-	}
-
-	colorToRGBA(color: Color) {
-		const r = Math.floor(color.r * 255);
-		const g = Math.floor(color.g * 255);
-		const b = Math.floor(color.b * 255);
-		const a = Math.floor(color.a * 255);
-		return `rgba(${r}, ${g}, ${b}, ${a})`;
 	}
 }

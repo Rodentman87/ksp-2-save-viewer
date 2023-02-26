@@ -98,11 +98,13 @@ export interface VesselState_0_1 {
 	currentTargetID: GuidWithDebugName_0_1_0;
 	launchLocation: string; // TODO enum? maybe? not sure exactly what this is, it says "Invalid" in my save
 	SubVessels: never[]; // TODO figure out this type
-	Situation: string; // TODO enum?
+	Situation: VesselSituations; // TODO enum?
 	ControlState: string; // TODO enum?
 	CommandModulesState: string; // TODO enum?
 	CurrentControlOwnerPart: GuidWithDebugName_0_1_0;
 }
+
+export type VesselSituations = "Landed" | "Orbiting" | "SubOrbital";
 
 export interface KerbalState_0_1 {
 	CurrentLadderPartId: GuidWithDebugName_0_1_0 | null;
