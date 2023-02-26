@@ -68,4 +68,8 @@ export class Save implements SaveFile_0_1_0 {
 	getTimeSince(time: number) {
 		return this.Metadata.UniverseTime - time;
 	}
+
+	getVesselByGuid(guid: string) {
+		return this.Vessels.find((vessel) => vessel.Guid.Guid === guid);
+	}
 }

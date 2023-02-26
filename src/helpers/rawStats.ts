@@ -49,12 +49,52 @@ export const CelestialBodyStats = {
 	},
 };
 
-export function getBodyStat(name: string) {
+export function getBodyStats(name: string) {
 	if (!(name in CelestialBodyStats)) {
 		return {
 			radius: 0,
 		};
 	} else {
 		return CelestialBodyStats[name as keyof typeof CelestialBodyStats];
+	}
+}
+
+export const ResourceStats = {
+	ElectricCharge: {
+		name: "Electric Charge",
+		abbreviation: "EC",
+		units: "U",
+		barColor: "#fff700",
+	},
+	MonoPropellant: {
+		name: "Mono Propellant",
+		abbreviation: "MP",
+		units: "t",
+		barColor: "#0051ff",
+	},
+	Methane: {
+		name: "Methane",
+		abbreviation: "LF",
+		units: "t",
+		barColor: "#00c3ff",
+	},
+	Oxidizer: {
+		name: "Oxidizer",
+		abbreviation: "Ox",
+		units: "t",
+		barColor: "#00fff7",
+	},
+};
+
+export function getResourceStats(name: string) {
+	if (!(name in ResourceStats)) {
+		return {
+			name: name,
+			abbreviation: name,
+			units: "U",
+			barColor: "#ff0000",
+		};
+	} else {
+		return ResourceStats[name as keyof typeof ResourceStats];
 	}
 }

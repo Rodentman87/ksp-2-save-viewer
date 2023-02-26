@@ -1,8 +1,15 @@
-import { EuiDataGrid, EuiDataGridColumn, EuiPageTemplate } from "@elastic/eui";
+import {
+	EuiButtonEmpty,
+	EuiDataGrid,
+	EuiDataGridColumn,
+	EuiEmptyPrompt,
+	EuiPageTemplate,
+} from "@elastic/eui";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import useLocalStorageState from "use-local-storage-state";
 import { formatMeters, formatSpeed, formatTime } from "../helpers/formatting";
-import { getBodyStat } from "../helpers/rawStats";
+import { getBodyStats } from "../helpers/rawStats";
 import { useSaveFile } from "../SaveFileContext";
 
 const columns: EuiDataGridColumn[] = [
@@ -42,6 +49,7 @@ const columns: EuiDataGridColumn[] = [
 
 export const Vessels: React.FC = () => {
 	const saveFile = useSaveFile();
+	const navigate = useNavigate();
 
 	const [visibleColumns, setVisibleColumns] = useLocalStorageState(
 		"vesselsVisibleColumns",
@@ -77,67 +85,95 @@ export const Vessels: React.FC = () => {
 				restrictWidth={false}
 			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
-				<EuiDataGrid
-					color="dark"
-					aria-label="Vessels"
-					columns={columns}
-					columnVisibility={{
-						visibleColumns,
-						setVisibleColumns,
-					}}
-					rowCount={saveFile.Vessels.length}
-					renderCellValue={({ rowIndex, columnId }) => {
-						const vessel = saveFile.Vessels[rowIndex];
-						const orbitedBodyStats = getBodyStat(
-							vessel.location.serializedOrbit.referenceBodyGuid
-						);
+				{saveFile.Vessels.length === 0 ? (
+					<EuiEmptyPrompt
+						title={<h2>No Active Vessels</h2>}
+						body={<span>Go get flying!</span>}
+					/>
+				) : (
+					<EuiDataGrid
+						color="dark"
+						aria-label="Vessels"
+						columns={columns}
+						columnVisibility={{
+							visibleColumns,
+							setVisibleColumns,
+						}}
+						rowCount={saveFile.Vessels.length}
+						renderCellValue={({ rowIndex, columnId }) => {
+							const vessel = saveFile.Vessels[rowIndex];
+							const orbitedBodyStats = getBodyStats(
+								vessel.location.serializedOrbit.referenceBodyGuid
+							);
 
-						switch (columnId) {
-							case "name":
-								return vessel.AssemblyDefinition.assemblyName;
-							case "ownedBy":
-								return saveFile.getPlayer(vessel.OwnerPlayerId)?.PlayerName;
-							case "location":
-								switch (vessel.vesselState.Situation) {
-									case "Landed":
-										return `Landed on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
-									case "Orbiting":
-										const apoapsis =
-											vessel.location.serializedOrbit.semiMajorAxis *
-												(1 + vessel.location.serializedOrbit.eccentricity) -
-											orbitedBodyStats.radius;
-										const periapsis =
-											vessel.location.serializedOrbit.semiMajorAxis *
-												(1 - vessel.location.serializedOrbit.eccentricity) -
-											orbitedBodyStats.radius;
-										return `Orbiting ${
-											vessel.location.serializedOrbit.referenceBodyGuid
-										} (${formatMeters(apoapsis)}, ${formatMeters(periapsis)})`;
-									case "SubOrbital":
-										return `Sub-orbital flight above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
-									default:
-										return `Unknown flight situation above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
-								}
-							case "speed":
-								return formatSpeed(
-									vessel.location.rigidbodyState.localVelocity
-								);
-							case "missionTime":
-								return formatTime(
-									saveFile.getTimeSince(vessel.vesselState.launchTime)
-								);
-							case "partCount":
-								return vessel.parts.length;
-							case "isDebris":
-								return vessel.IsDebris ? "Yes" : "No";
-						}
-					}}
-					inMemory={{ level: "sorting" }}
-					sorting={{
-						columns: sort,
-						onSort: setSort,
-					}}
-				/>
+							switch (columnId) {
+								case "name":
+									return vessel.AssemblyDefinition.assemblyName;
+								case "ownedBy":
+									return saveFile.getPlayer(vessel.OwnerPlayerId)?.PlayerName;
+								case "location":
+									switch (vessel.vesselState.Situation) {
+										case "Landed":
+											return `Landed on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										case "Orbiting":
+											const apoapsis =
+												vessel.location.serializedOrbit.semiMajorAxis *
+													(1 + vessel.location.serializedOrbit.eccentricity) -
+												orbitedBodyStats.radius;
+											const periapsis =
+												vessel.location.serializedOrbit.semiMajorAxis *
+													(1 - vessel.location.serializedOrbit.eccentricity) -
+												orbitedBodyStats.radius;
+											return `Orbiting ${
+												vessel.location.serializedOrbit.referenceBodyGuid
+											} (${formatMeters(apoapsis)}, ${formatMeters(
+												periapsis
+											)})`;
+										case "SubOrbital":
+											return `Sub-orbital flight above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										default:
+											return `Unknown flight situation above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+									}
+								case "speed":
+									return formatSpeed(
+										vessel.location.rigidbodyState.localVelocity
+									);
+								case "missionTime":
+									return formatTime(
+										saveFile.getTimeSince(vessel.vesselState.launchTime)
+									);
+								case "partCount":
+									return vessel.parts.length;
+								case "isDebris":
+									return vessel.IsDebris ? "Yes" : "No";
+							}
+						}}
+						inMemory={{ level: "sorting" }}
+						sorting={{
+							columns: sort,
+							onSort: setSort,
+						}}
+						trailingControlColumns={[
+							{
+								id: "viewDetail",
+								headerCellRender: () => <span></span>,
+								rowCellRender: ({ rowIndex }) => {
+									const vessel = saveFile.Vessels[rowIndex];
+									return (
+										<EuiButtonEmpty
+											onClick={() => {
+												navigate(`/vessels/${vessel.Guid.Guid}`);
+											}}
+											iconType="search"
+											color="ghost"
+										/>
+									);
+								},
+								width: 44,
+							},
+						]}
+					/>
+				)}
 			</EuiPageTemplate.Section>
 		</EuiPageTemplate>
 	);

@@ -11,6 +11,8 @@ import { Colonies } from "./pages/Colonies";
 import { Flags } from "./pages/Flags";
 import { Home } from "./pages/Home";
 import { Licenses } from "./pages/Licenses";
+import { TravelLog } from "./pages/TravelLog";
+import { VesselDetails } from "./pages/VesselDetails";
 import { Vessels } from "./pages/Vessels";
 import { loadSaveData } from "./save-helper/loadSaveData";
 import { Save } from "./save-helper/Save";
@@ -32,6 +34,10 @@ const router = createHashRouter([
 				element: <Vessels />,
 			},
 			{
+				path: "vessels/:vesselId",
+				element: <VesselDetails />,
+			},
+			{
 				path: "agencies",
 				element: <Agencies />,
 			},
@@ -46,6 +52,10 @@ const router = createHashRouter([
 			{
 				path: "flags",
 				element: <Flags />,
+			},
+			{
+				path: "travel-log",
+				element: <TravelLog />,
 			},
 		],
 	},

@@ -45,3 +45,7 @@ export function formatTime(time: number) {
 	}
 	return `${seconds}s`;
 }
+
+export function formatNumberAtMostTwoDecimals(number: number) {
+	return number.toFixed(2).replace(/\.?0+$/, "");
+}

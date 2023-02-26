@@ -12,7 +12,7 @@ export const NavBar: React.FC = () => {
 
 	return (
 		<>
-			<motion.div className="fixed top-0 left-0 w-screen">
+			<motion.div className="absolute top-0 left-0 w-screen">
 				<EuiHeader
 					theme="dark"
 					sections={[
@@ -65,6 +65,15 @@ export const NavBar: React.FC = () => {
 									isSelected={location.pathname === "/flags"}
 								>
 									Flags
+								</EuiHeaderLink>,
+								<EuiHeaderLink
+									onClick={() => {
+										navigate("/travel-log");
+									}}
+									isActive={location.pathname === "/travel-log"}
+									isSelected={location.pathname === "/travel-log"}
+								>
+									Travel Log
 								</EuiHeaderLink>,
 							],
 						},
