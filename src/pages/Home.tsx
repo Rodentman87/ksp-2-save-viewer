@@ -26,7 +26,11 @@ export const Home: React.FC = () => {
 
 	return (
 		<EuiPageTemplate grow>
-			<EuiPageTemplate.Header pageTitle="Save Data" restrictWidth={false} />
+			<EuiPageTemplate.Header
+				iconType="save"
+				pageTitle="Save Data"
+				restrictWidth={false}
+			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
 				<EuiFlexGrid columns={3}>
 					<EuiFlexItem>

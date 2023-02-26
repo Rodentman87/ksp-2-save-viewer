@@ -48,6 +48,24 @@ export const NavBar: React.FC = () => {
 								>
 									Agencies
 								</EuiHeaderLink>,
+								<EuiHeaderLink
+									onClick={() => {
+										navigate("/colonies");
+									}}
+									isActive={location.pathname === "/colonies"}
+									isSelected={location.pathname === "/colonies"}
+								>
+									Colonies
+								</EuiHeaderLink>,
+								<EuiHeaderLink
+									onClick={() => {
+										navigate("/flags");
+									}}
+									isActive={location.pathname === "/flags"}
+									isSelected={location.pathname === "/flags"}
+								>
+									Flags
+								</EuiHeaderLink>,
 							],
 						},
 						{

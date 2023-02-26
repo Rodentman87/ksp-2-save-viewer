@@ -71,7 +71,11 @@ export const Vessels: React.FC = () => {
 
 	return (
 		<EuiPageTemplate grow>
-			<EuiPageTemplate.Header pageTitle="Vessels" restrictWidth={false} />
+			<EuiPageTemplate.Header
+				iconType="launch"
+				pageTitle="Vessels"
+				restrictWidth={false}
+			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
 				<EuiDataGrid
 					color="dark"

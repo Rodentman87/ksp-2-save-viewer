@@ -47,7 +47,11 @@ export const Agencies: React.FC = () => {
 
 	return (
 		<EuiPageTemplate grow>
-			<EuiPageTemplate.Header pageTitle="Agencies" restrictWidth={false} />
+			<EuiPageTemplate.Header
+				iconType="home"
+				pageTitle="Agencies"
+				restrictWidth={false}
+			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
 				<EuiDataGrid
 					color="dark"

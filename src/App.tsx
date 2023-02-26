@@ -7,6 +7,8 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import useLocalStorageState from "use-local-storage-state";
 import { Layout } from "./components/Layout";
 import { Agencies } from "./pages/Agencies";
+import { Colonies } from "./pages/Colonies";
+import { Flags } from "./pages/Flags";
 import { Home } from "./pages/Home";
 import { Licenses } from "./pages/Licenses";
 import { Vessels } from "./pages/Vessels";
@@ -36,6 +38,14 @@ const router = createHashRouter([
 			{
 				path: "licenses",
 				element: <Licenses />,
+			},
+			{
+				path: "colonies",
+				element: <Colonies />,
+			},
+			{
+				path: "flags",
+				element: <Flags />,
 			},
 		],
 	},
