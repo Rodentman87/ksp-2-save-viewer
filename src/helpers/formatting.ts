@@ -9,10 +9,10 @@ export function formatSpeed(speed: Vector3D) {
 
 export function formatMeters(meters: number) {
 	if (meters > 1000000) {
-		return `${(meters / 1000000).toFixed(0)}Mm`;
+		return `${(meters / 1000000).toFixed(2)}Mm`;
 	}
 	if (meters > 1000) {
-		return `${(meters / 1000).toFixed(0)}km`;
+		return `${(meters / 1000).toFixed(2)}km`;
 	}
 	return `${meters.toFixed(0)}m`;
 }

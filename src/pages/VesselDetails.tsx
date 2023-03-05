@@ -18,6 +18,7 @@ import {
 } from "../helpers/formatting";
 import { getOrbitalStats } from "../helpers/orbitalHelpers";
 import { getResourceStats } from "../helpers/rawStats";
+import { Vessel } from "../save-helper/Vessel";
 import { useSaveFile } from "../SaveFileContext";
 import { useTheme } from "../ThemeContext";
 import { Vessel_0_1 } from "../types/vessel/VesselInfo-0-1";
@@ -67,7 +68,7 @@ export const VesselDetails: React.FC = () => {
 	);
 };
 
-const VesselLocationCard: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
+const VesselLocationCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 	let innerPanelData;
 
 	switch (vessel.vesselState.Situation) {
@@ -102,7 +103,7 @@ const VesselLocationCard: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 	);
 };
 
-const ResourceCard: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
+const ResourceCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 	const resources = useMemo(() => {
 		const resourcesMap = new Map<string, { total: number; current: number }>();
 		for (const part of vessel.parts) {
@@ -148,11 +149,25 @@ const ResourceCard: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 	);
 };
 
-const MetadataCard: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
+const MetadataCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
+	const stats = useMemo(() => {
+		return vessel.getTravelLogObject()?.Statistics;
+	}, [vessel]);
+
 	return (
 		<EuiPanel className="flex flex-col gap-1">
 			<h2 className="text-xl font-bold">General Info</h2>
 			<p>Part count: {vessel.parts.length}</p>
+			{stats && (
+				<>
+					<p>Distance Traveled: {formatMeters(stats.DistanceTravelled)}</p>
+					<p>
+						Highest G-Force: {formatNumberAtMostTwoDecimals(stats.MaxGeeForce)}g
+					</p>
+					<p>Highest Speed: {formatMeters(stats.MaxSpeed)}/s</p>
+					<p>Highest Altitude: {formatMeters(stats.MaxAltitude)}</p>
+				</>
+			)}
 		</EuiPanel>
 	);
 };

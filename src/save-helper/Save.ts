@@ -9,11 +9,11 @@ import {
 	SavePlantedFlag_0_1_0,
 	SaveProperties_0_1_0,
 	SaveSessionManager_0_1_0,
-	SaveTravelLogData_0_1_0,
 } from "../types/save/SaveFile-0-1-0";
-import { Vessel_0_1 } from "../types/vessel/VesselInfo-0-1";
+import { TravelLog } from "./TravelLog";
+import { Vessel } from "./Vessel";
 
-export class Save implements SaveFile_0_1_0 {
+export class Save {
 	Metadata: SaveMetadata_0_1_0;
 	Properties: SaveProperties_0_1_0;
 	GalaxyDefinitionKey: string;
@@ -21,12 +21,12 @@ export class Save implements SaveFile_0_1_0 {
 	SessionGuid: string;
 	Agencies: SaveAgency_0_1_0[];
 	CampaignPlayers: SaveCampaignPlayer_0_1_0[];
-	Vessels: Vessel_0_1[];
+	vessels: Vessel[];
 	missionData: SaveMissionData_0_1_0[];
 	ColonyData: SaveColonyData_0_1_0;
 	KerbalData: SaveKerbalData_0_1_0;
 	PlantedFlags: SavePlantedFlag_0_1_0[];
-	TravelLogData: SaveTravelLogData_0_1_0;
+	travelLog: TravelLog;
 
 	constructor(saveFile: SaveFile_0_1_0) {
 		this.Metadata = saveFile.Metadata;
@@ -36,12 +36,12 @@ export class Save implements SaveFile_0_1_0 {
 		this.SessionGuid = saveFile.SessionGuid;
 		this.Agencies = saveFile.Agencies;
 		this.CampaignPlayers = saveFile.CampaignPlayers;
-		this.Vessels = saveFile.Vessels;
+		this.vessels = saveFile.Vessels.map((vessel) => new Vessel(vessel, this));
 		this.missionData = saveFile.missionData;
 		this.ColonyData = saveFile.ColonyData;
 		this.KerbalData = saveFile.KerbalData;
 		this.PlantedFlags = saveFile.PlantedFlags;
-		this.TravelLogData = saveFile.TravelLogData;
+		this.travelLog = new TravelLog(saveFile.TravelLogData, this);
 	}
 
 	export() {
@@ -70,6 +70,6 @@ export class Save implements SaveFile_0_1_0 {
 	}
 
 	getVesselByGuid(guid: string) {
-		return this.Vessels.find((vessel) => vessel.Guid.Guid === guid);
+		return this.vessels.find((vessel) => vessel.Guid.Guid === guid);
 	}
 }

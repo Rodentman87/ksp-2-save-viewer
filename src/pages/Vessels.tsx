@@ -85,7 +85,7 @@ export const Vessels: React.FC = () => {
 				restrictWidth={false}
 			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
-				{saveFile.Vessels.length === 0 ? (
+				{saveFile.vessels.length === 0 ? (
 					<EuiEmptyPrompt
 						title={<h2>No Active Vessels</h2>}
 						body={<span>Go get flying!</span>}
@@ -99,9 +99,9 @@ export const Vessels: React.FC = () => {
 							visibleColumns,
 							setVisibleColumns,
 						}}
-						rowCount={saveFile.Vessels.length}
+						rowCount={saveFile.vessels.length}
 						renderCellValue={({ rowIndex, columnId }) => {
-							const vessel = saveFile.Vessels[rowIndex];
+							const vessel = saveFile.vessels[rowIndex];
 							const orbitedBodyStats = getBodyStats(
 								vessel.location.serializedOrbit.referenceBodyGuid
 							);
@@ -158,7 +158,7 @@ export const Vessels: React.FC = () => {
 								id: "viewDetail",
 								headerCellRender: () => <span></span>,
 								rowCellRender: ({ rowIndex }) => {
-									const vessel = saveFile.Vessels[rowIndex];
+									const vessel = saveFile.vessels[rowIndex];
 									return (
 										<EuiButtonEmpty
 											onClick={() => {

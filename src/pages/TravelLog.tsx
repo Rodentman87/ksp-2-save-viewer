@@ -78,7 +78,7 @@ export const TravelLog: React.FC = () => {
 	const saveFile = useSaveFile();
 
 	const items = useMemo(() => {
-		return [...saveFile.TravelLogData.ObjectEvents]
+		return [...saveFile.travelLog.events]
 			.reverse()
 			.map((e) => eventToTimelineItem(e, saveFile));
 	}, [saveFile]);
