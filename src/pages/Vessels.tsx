@@ -165,7 +165,7 @@ export const Vessels: React.FC = () => {
 												navigate(`/vessels/${vessel.Guid.Guid}`);
 											}}
 											iconType="search"
-											color="ghost"
+											color="text"
 										/>
 									);
 								},

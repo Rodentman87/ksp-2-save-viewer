@@ -10,6 +10,7 @@ import classNames from "classnames";
 import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FixedSizeList } from "react-window";
+import { PartModuleCard } from "../components/PartModuleCards/PartModuleCard";
 import { VesselStateTag } from "../components/VesselStateTag";
 import {
 	formatMeters,
@@ -18,6 +19,7 @@ import {
 import { getOrbitalStats } from "../helpers/orbitalHelpers";
 import { getResourceStats } from "../helpers/rawStats";
 import { useSaveFile } from "../SaveFileContext";
+import { useTheme } from "../ThemeContext";
 import { Vessel_0_1 } from "../types/vessel/VesselInfo-0-1";
 
 export const VesselDetails: React.FC = () => {
@@ -57,7 +59,7 @@ export const VesselDetails: React.FC = () => {
 								<MetadataCard vessel={vessel} />
 							</EuiFlexItem>
 						</EuiFlexGrid>
-						{/* <PartSelector vessel={vessel} /> */}
+						<PartSelector vessel={vessel} />
 					</>
 				)}
 			</EuiPageTemplate.Section>
@@ -162,12 +164,7 @@ const PartSelector: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 		[selectedPartIndex, vessel.parts]
 	);
 
-	const resources = useMemo(() => {
-		if (!selectedPart.partState.resources) return;
-		return Object.keys(selectedPart.partState.resources).map((resource) => {
-			return [resource, selectedPart.partState.resources[resource]] as const;
-		});
-	}, [selectedPart]);
+	const { light } = useTheme();
 
 	return (
 		<div className="w-full mt-6 flex flex-row gap-2 items-stretch">
@@ -194,36 +191,45 @@ const PartSelector: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 					}}
 				</FixedSizeList>
 			</div>
-			<div className="grow border-solid border-2 border-slate-300 rounded-md p-4">
-				<EuiFlexGrid columns={2}>
-					{resources && (
-						<EuiFlexItem>
-							<EuiPanel className="flex flex-col gap-1">
-								<h2 className="text-xl font-bold">Resources</h2>
-								{resources.map(([resource, { capacityUnits, storedUnits }]) => {
-									const resourceStats = getResourceStats(resource);
-
-									return (
-										<div key={resource}>
-											<EuiProgress
-												label={resourceStats.name}
-												size="m"
-												color={resourceStats.barColor}
-												max={capacityUnits}
-												value={storedUnits}
-												valueText={`${formatNumberAtMostTwoDecimals(
-													storedUnits
-												)}/${formatNumberAtMostTwoDecimals(capacityUnits)}${
-													resourceStats.units
-												}`}
-											/>
-										</div>
-									);
-								})}
-							</EuiPanel>
-						</EuiFlexItem>
-					)}
-				</EuiFlexGrid>
+			<div
+				className={classNames(
+					"grow rounded-md p-4 grid grid-cols-2 auto-rows-min gap-2 overflow-y-auto",
+					{
+						"bg-zinc-900": !light,
+						"bg-gray-200": light,
+					}
+				)}
+				style={{
+					height: 600,
+				}}
+			>
+				<div className="col-span-2">
+					<h3 className="text-2xl font-bold">
+						Part Info: {selectedPart.partName}
+					</h3>
+				</div>
+				{selectedPart.PartModulesState.map((mod) => {
+					return (
+						<PartModuleCard
+							key={mod.Name}
+							partModuleState={mod}
+							part={selectedPart}
+						/>
+					);
+				})}
+				<EuiPanel
+					hasShadow={false}
+					hasBorder
+					className="flex flex-col gap-1 col-span-2"
+				>
+					<h2 className="text-xl font-bold">Part JSON</h2>
+					<details>
+						<summary>Click to expand</summary>
+						<pre>
+							<code>{JSON.stringify(selectedPart, null, 2)}</code>
+						</pre>
+					</details>
+				</EuiPanel>
 			</div>
 		</div>
 	);

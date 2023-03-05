@@ -35,7 +35,8 @@
 		"build": "yarn run gen:licenses && react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"gen:licenses": "license-report --only=prod --output=json > ./src/licenses.json"
+		"gen:licenses": "license-report --only=prod --output=json > ./src/licenses.json",
+		"postinstall": "./copyEuiThemes.sh"
 	},
 	"eslintConfig": {
 		"extends": [

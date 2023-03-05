@@ -180,3 +180,8 @@ export interface DataObject_0_1 {
 	};
 	[extra: string]: unknown;
 }
+
+export interface ValueWithContextKey<T> {
+	ContextKey: string;
+	storedValue: T;
+}

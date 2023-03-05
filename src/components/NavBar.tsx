@@ -3,12 +3,15 @@ import { motion } from "framer-motion";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSaveFile } from "../SaveFileContext";
+import { useTheme } from "../ThemeContext";
 
 export const NavBar: React.FC = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
 	const save = useSaveFile();
+
+	const { toggleTheme } = useTheme();
 
 	return (
 		<>
@@ -100,6 +103,13 @@ export const NavBar: React.FC = () => {
 									isSelected={location.pathname === "/licenses"}
 								>
 									Licenses
+								</EuiHeaderLink>,
+								<EuiHeaderLink
+									onClick={() => {
+										toggleTheme();
+									}}
+								>
+									Toggle Theme
 								</EuiHeaderLink>,
 							],
 						},

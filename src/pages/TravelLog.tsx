@@ -81,7 +81,7 @@ export const TravelLog: React.FC = () => {
 		return [...saveFile.TravelLogData.ObjectEvents]
 			.reverse()
 			.map((e) => eventToTimelineItem(e, saveFile));
-	}, [saveFile.TravelLogData.ObjectEvents]);
+	}, [saveFile]);
 
 	return (
 		<EuiPageTemplate grow>

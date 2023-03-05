@@ -1,6 +1,4 @@
 import { EuiButton, EuiIcon, EuiProvider, EuiToolTip } from "@elastic/eui";
-import "@elastic/eui/dist/eui_theme_dark.css";
-// import "@elastic/eui/dist/eui_theme_light.css";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
@@ -19,6 +17,9 @@ import { Save } from "./save-helper/Save";
 import { SaveFileContext } from "./SaveFileContext";
 import { ThemeContext } from "./ThemeContext";
 import { SaveFile_0_1_0 } from "./types/save/SaveFile-0-1-0";
+
+const ThemeDark = React.lazy(() => import("./components/ThemeDark"));
+const ThemeLight = React.lazy(() => import("./components/ThemeLight"));
 
 const router = createHashRouter([
 	{
@@ -61,22 +62,22 @@ const router = createHashRouter([
 	},
 ]);
 
-// let defaultTheme = false;
+let defaultTheme = false;
 
-// if (typeof window !== "undefined") {
-// 	if (localStorage.getItem("theme") === "dark") {
-// 		defaultTheme = false;
-// 	} else if (localStorage.getItem("theme") === "light") {
-// 		defaultTheme = true;
-// 	} else {
-// 		defaultTheme = !window.matchMedia("(prefers-color-scheme: dark)").matches;
-// 	}
-// }
+if (typeof window !== "undefined") {
+	if (localStorage.getItem("theme") === "dark") {
+		defaultTheme = false;
+	} else if (localStorage.getItem("theme") === "light") {
+		defaultTheme = true;
+	} else {
+		defaultTheme = !window.matchMedia("(prefers-color-scheme: dark)").matches;
+	}
+}
 
 function App() {
 	const [saveFile, setSaveFile] = React.useState<Save | null>(null);
 	const [error, setError] = React.useState<string | null>(null);
-	const [theme, setTheme] = useState(false);
+	const [theme, setTheme] = useState(defaultTheme);
 	const [lastSaveFile, setLastSaveFile] =
 		useLocalStorageState<SaveFile_0_1_0 | null>("lastSaveFile", {
 			defaultValue: null,
@@ -109,6 +110,7 @@ function App() {
 				},
 			}}
 		>
+			<React.Suspense>{theme ? <ThemeLight /> : <ThemeDark />}</React.Suspense>
 			<EuiProvider colorMode={theme ? "light" : "dark"}>
 				<div className="w-screen h-screen flex flex-col bg-slate-800 pt-12">
 					{saveFile !== null ? (
