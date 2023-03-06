@@ -1,11 +1,9 @@
-import { EuiProgress } from "@elastic/eui";
 import React, { useMemo } from "react";
-import { formatNumberAtMostTwoDecimals } from "../../helpers/formatting";
-import { getResourceStats } from "../../helpers/rawStats";
 import {
 	PartModuleState_0_1,
 	Part_0_1,
 } from "../../types/vessel/VesselInfo-0-1";
+import { ResourceBar } from "../ResourceBar";
 import { PartModuleCardBase } from "./PartModuleCard";
 
 export const ResourceCapacities: React.FC<{
@@ -24,26 +22,13 @@ export const ResourceCapacities: React.FC<{
 			name="Resource Storage"
 			partModuleState={partModuleState}
 		>
-			{resources.map(([resource, { capacityUnits, storedUnits }]) => {
-				const resourceStats = getResourceStats(resource);
-
-				return (
-					<div key={resource}>
-						<EuiProgress
-							label={resourceStats.name}
-							size="m"
-							color={resourceStats.barColor}
-							max={capacityUnits}
-							value={storedUnits}
-							valueText={`${formatNumberAtMostTwoDecimals(
-								storedUnits
-							)}/${formatNumberAtMostTwoDecimals(capacityUnits)}${
-								resourceStats.units
-							}`}
-						/>
-					</div>
-				);
-			})}
+			{resources.map(([resource, { capacityUnits, storedUnits }]) => (
+				<ResourceBar
+					name={resource}
+					current={storedUnits}
+					total={capacityUnits}
+				/>
+			))}
 		</PartModuleCardBase>
 	);
 };

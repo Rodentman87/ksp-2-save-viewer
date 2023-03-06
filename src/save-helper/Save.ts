@@ -1,15 +1,15 @@
 import {
-	SaveAgency_0_1_0,
 	SaveCampaignPlayer_0_1_0,
 	SaveColonyData_0_1_0,
 	SaveFile_0_1_0,
 	SaveKerbalData_0_1_0,
 	SaveMetadata_0_1_0,
 	SaveMissionData_0_1_0,
-	SavePlantedFlag_0_1_0,
 	SaveProperties_0_1_0,
 	SaveSessionManager_0_1_0,
 } from "../types/save/SaveFile-0-1-0";
+import { Agency } from "./Agency";
+import { PlantedFlag } from "./PlantedFlag";
 import { TravelLog } from "./TravelLog";
 import { Vessel } from "./Vessel";
 
@@ -19,13 +19,13 @@ export class Save {
 	GalaxyDefinitionKey: string;
 	SessionManager: SaveSessionManager_0_1_0;
 	SessionGuid: string;
-	Agencies: SaveAgency_0_1_0[];
+	agencies: Agency[];
 	CampaignPlayers: SaveCampaignPlayer_0_1_0[];
 	vessels: Vessel[];
 	missionData: SaveMissionData_0_1_0[];
 	ColonyData: SaveColonyData_0_1_0;
 	KerbalData: SaveKerbalData_0_1_0;
-	PlantedFlags: SavePlantedFlag_0_1_0[];
+	plantedFlags: PlantedFlag[];
 	travelLog: TravelLog;
 
 	constructor(saveFile: SaveFile_0_1_0) {
@@ -34,13 +34,15 @@ export class Save {
 		this.GalaxyDefinitionKey = saveFile.GalaxyDefinitionKey;
 		this.SessionManager = saveFile.SessionManager;
 		this.SessionGuid = saveFile.SessionGuid;
-		this.Agencies = saveFile.Agencies;
+		this.agencies = saveFile.Agencies.map((agency) => new Agency(agency, this));
 		this.CampaignPlayers = saveFile.CampaignPlayers;
 		this.vessels = saveFile.Vessels.map((vessel) => new Vessel(vessel, this));
 		this.missionData = saveFile.missionData;
 		this.ColonyData = saveFile.ColonyData;
 		this.KerbalData = saveFile.KerbalData;
-		this.PlantedFlags = saveFile.PlantedFlags;
+		this.plantedFlags = saveFile.PlantedFlags.map(
+			(flag) => new PlantedFlag(flag, this)
+		);
 		this.travelLog = new TravelLog(saveFile.TravelLogData, this);
 	}
 

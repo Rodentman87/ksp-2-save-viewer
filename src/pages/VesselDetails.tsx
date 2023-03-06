@@ -4,20 +4,19 @@ import {
 	EuiFlexItem,
 	EuiPageTemplate,
 	EuiPanel,
-	EuiProgress,
 } from "@elastic/eui";
 import classNames from "classnames";
 import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FixedSizeList } from "react-window";
 import { PartModuleCard } from "../components/PartModuleCards/PartModuleCard";
+import { ResourceBar } from "../components/ResourceBar";
 import { VesselStateTag } from "../components/VesselStateTag";
 import {
 	formatMeters,
 	formatNumberAtMostTwoDecimals,
 } from "../helpers/formatting";
 import { getOrbitalStats } from "../helpers/orbitalHelpers";
-import { getResourceStats } from "../helpers/rawStats";
 import { Vessel } from "../save-helper/Vessel";
 import { useSaveFile } from "../SaveFileContext";
 import { useTheme } from "../ThemeContext";
@@ -127,24 +126,9 @@ const ResourceCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 	return (
 		<EuiPanel className="flex flex-col gap-1">
 			<h2 className="text-xl font-bold">Resources</h2>
-			{resources.map(([resource, { current, total }]) => {
-				const resourceStats = getResourceStats(resource);
-
-				return (
-					<div key={resource}>
-						<EuiProgress
-							label={resourceStats.name}
-							size="m"
-							color={resourceStats.barColor}
-							max={total}
-							value={current}
-							valueText={`${formatNumberAtMostTwoDecimals(
-								current
-							)}/${formatNumberAtMostTwoDecimals(total)}${resourceStats.units}`}
-						/>
-					</div>
-				);
-			})}
+			{resources.map(([resource, { current, total }]) => (
+				<ResourceBar name={resource} current={current} total={total} />
+			))}
 		</EuiPanel>
 	);
 };

@@ -84,6 +84,24 @@ export const ResourceStats = {
 		units: "t",
 		barColor: "#00fff7",
 	},
+	Xenon: {
+		name: "Xenon Gas",
+		abbreviation: "Xe",
+		units: "t",
+		barColor: "#722e97",
+	},
+	Hydrogen: {
+		name: "Hydrogen",
+		abbreviation: "H",
+		units: "t",
+		barColor: "#f884cc",
+	},
+	Ablator: {
+		name: "Ablator",
+		abbreviation: "Ab",
+		units: "t",
+		barColor: "#d5ae00",
+	},
 };
 
 export function getResourceStats(name: string) {

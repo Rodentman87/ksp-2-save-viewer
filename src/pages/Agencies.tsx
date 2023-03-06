@@ -1,7 +1,6 @@
 import { EuiDataGrid, EuiDataGridColumn, EuiPageTemplate } from "@elastic/eui";
 import React from "react";
 import useLocalStorageState from "use-local-storage-state";
-import { colorToRGBA } from "../helpers/formatting";
 import { useSaveFile } from "../SaveFileContext";
 
 const columns: EuiDataGridColumn[] = [
@@ -61,19 +60,17 @@ export const Agencies: React.FC = () => {
 						visibleColumns,
 						setVisibleColumns,
 					}}
-					rowCount={saveFile.Agencies.length}
+					rowCount={saveFile.agencies.length}
 					renderCellValue={({ rowIndex, columnId, setCellProps }) => {
-						const agency = saveFile.Agencies[rowIndex];
+						const agency = saveFile.agencies[rowIndex];
 
 						switch (columnId) {
 							case "name":
 								return agency.AgencyName;
 							case "colors":
-								const primary = colorToRGBA(agency.ColorBase);
-								const accent = colorToRGBA(agency.ColorAccent);
 								setCellProps({
 									style: {
-										background: `linear-gradient(100deg, ${primary} 0%,  ${primary} 50%, ${accent} 50%, ${accent} 100%)`,
+										background: agency.getColorsAsGradient(),
 									},
 								});
 								return "";

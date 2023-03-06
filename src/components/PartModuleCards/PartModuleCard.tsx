@@ -5,7 +5,15 @@ import {
 	Part_0_1,
 } from "../../types/vessel/VesselInfo-0-1";
 import { ColorCard } from "./Color";
+import { Command } from "./Command";
+import { DataTransmitter } from "./DataTransmitter";
+import { DockingNode } from "./DockingNode";
 import { Drag } from "./Drag";
+import { Generator } from "./Generator";
+import { Gimbal } from "./Gimbal";
+import { LitPart } from "./LitPart";
+import { Parachute } from "./Parachute";
+import { RCS } from "./RCS";
 import { ReactionWheel } from "./ReactionWheel";
 import { ResourceCapacities } from "./ResourceCapacities";
 
@@ -22,10 +30,31 @@ export const PartModuleCard: React.FC<{
 			);
 		case "PartComponentModule_Drag":
 			return <Drag partModuleState={partModuleState} />;
-		case "PartComponentModule_CrewedInterior":
-			return null;
 		case "PartComponentModule_Color":
 			return <ColorCard partModuleState={partModuleState} />;
+		case "PartComponentModule_DataTransmitter":
+			return <DataTransmitter partModuleState={partModuleState} />;
+		case "PartComponentModule_Command":
+			return <Command partModuleState={partModuleState} />;
+		case "PartComponentModule_LitPart":
+			return <LitPart partModuleState={partModuleState} />;
+		case "PartComponentModule_Parachute":
+			return <Parachute partModuleState={partModuleState} />;
+		case "PartComponentModule_RCS":
+			return <RCS partModuleState={partModuleState} />;
+		case "PartComponentModule_DockingNode":
+			return <DockingNode partModuleState={partModuleState} />;
+		case "PartComponentModule_Generator":
+			return <Generator partModuleState={partModuleState} />;
+		case "PartComponentModule_Gimbal":
+			return <Gimbal partModuleState={partModuleState} />;
+
+		// TODO local data for these parts doesn't seem to exist, may be able to get data from elsewhere
+		case "PartComponentModule_CrewedInterior":
+		case "PartComponentModule_ToggleCrossfeed":
+		case "PartComponentModule_FuelLine":
+			return null;
+
 		default:
 			return (
 				<PartModuleCardBase

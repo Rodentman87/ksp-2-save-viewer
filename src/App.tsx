@@ -1,6 +1,6 @@
 import { EuiButton, EuiIcon, EuiProvider, EuiToolTip } from "@elastic/eui";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import useLocalStorageState from "use-local-storage-state";
 import { Layout } from "./components/Layout";
@@ -83,6 +83,13 @@ function App() {
 			defaultValue: null,
 		});
 
+	useLayoutEffect(() => {
+		const query = new URLSearchParams(window.location.search);
+		if (lastSaveFile && query.get("autoloadLastSave") === "true") {
+			setSaveFile(loadSaveData(JSON.stringify(lastSaveFile)));
+		}
+	}, [lastSaveFile]);
+
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		setError(null);
 		if (!e.target.files) return;
@@ -140,8 +147,8 @@ function App() {
 									</h1>
 									<input
 										type="file"
+										accept=".json,application/json"
 										className="text-black"
-										multiple
 										onChange={handleFileChange}
 									/>
 									{error && <p className="text-red-500 mt-2">{error}</p>}

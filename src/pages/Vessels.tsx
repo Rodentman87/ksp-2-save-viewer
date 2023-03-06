@@ -131,8 +131,10 @@ export const Vessels: React.FC = () => {
 											)})`;
 										case "SubOrbital":
 											return `Sub-orbital flight above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										case "PreLaunch":
+											return `Pre-launch on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
 										default:
-											return `Unknown flight situation above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+											return `Unknown flight situation (${vessel.vesselState.Situation}) above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
 									}
 								case "speed":
 									return formatSpeed(

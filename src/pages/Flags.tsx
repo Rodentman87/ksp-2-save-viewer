@@ -60,7 +60,7 @@ export const Flags: React.FC = () => {
 				restrictWidth={false}
 			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
-				{saveFile.PlantedFlags.length === 0 ? (
+				{saveFile.plantedFlags.length === 0 ? (
 					<EuiEmptyPrompt
 						title={<h2>No Flags</h2>}
 						body={<span>Go out and plant some!</span>}
@@ -74,9 +74,9 @@ export const Flags: React.FC = () => {
 							visibleColumns,
 							setVisibleColumns,
 						}}
-						rowCount={saveFile.PlantedFlags.length}
+						rowCount={saveFile.plantedFlags.length}
 						renderCellValue={({ rowIndex, columnId }) => {
-							const flag = saveFile.PlantedFlags[rowIndex];
+							const flag = saveFile.plantedFlags[rowIndex];
 
 							switch (columnId) {
 								case "name":

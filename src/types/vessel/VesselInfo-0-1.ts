@@ -104,7 +104,11 @@ export interface VesselState_0_1 {
 	CurrentControlOwnerPart: GuidWithDebugName_0_1_0;
 }
 
-export type VesselSituations = "Landed" | "Orbiting" | "SubOrbital";
+export type VesselSituations =
+	| "Landed"
+	| "Orbiting"
+	| "SubOrbital"
+	| "PreLaunch";
 
 export interface KerbalState_0_1 {
 	CurrentLadderPartId: GuidWithDebugName_0_1_0 | null;
