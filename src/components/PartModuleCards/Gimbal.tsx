@@ -48,7 +48,7 @@ export const Gimbal: React.FC<{
 					/>
 				</EuiFormRow>
 				<EuiFormRow
-					label="Advanced Settings"
+					label="Advanced Settings Shown"
 					display="columnCompressedSwitch"
 					isDisabled
 					hasChildLabel
@@ -56,7 +56,7 @@ export const Gimbal: React.FC<{
 					<EuiSwitch
 						compressed
 						id="IsAdvancedSettingsShown"
-						label="Advanced Settings"
+						label="Advanced Settings Shown"
 						showLabel={false}
 						checked={gimbalData.DataObject.IsAdvancedSettingsShown.storedValue}
 						disabled

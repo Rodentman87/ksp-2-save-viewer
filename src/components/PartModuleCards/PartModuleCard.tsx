@@ -7,15 +7,23 @@ import {
 import { ColorCard } from "./Color";
 import { Command } from "./Command";
 import { DataTransmitter } from "./DataTransmitter";
+import { Deployable } from "./Deployable";
 import { DockingNode } from "./DockingNode";
 import { Drag } from "./Drag";
+import { Engine } from "./Engine";
 import { Generator } from "./Generator";
 import { Gimbal } from "./Gimbal";
+import { Light } from "./Light";
 import { LitPart } from "./LitPart";
 import { Parachute } from "./Parachute";
 import { RCS } from "./RCS";
 import { ReactionWheel } from "./ReactionWheel";
 import { ResourceCapacities } from "./ResourceCapacities";
+import { SolarPanel } from "./SolarPanel";
+import { WheelBase } from "./WheelBase";
+import { WheelBrakes } from "./WheelBrakes";
+import { WheelSteering } from "./WheelSteering";
+import { WheelSuspension } from "./WheelSuspension";
 
 export const PartModuleCard: React.FC<{
 	partModuleState: PartModuleState_0_1;
@@ -48,11 +56,33 @@ export const PartModuleCard: React.FC<{
 			return <Generator partModuleState={partModuleState} />;
 		case "PartComponentModule_Gimbal":
 			return <Gimbal partModuleState={partModuleState} />;
+		case "PartComponentModule_Deployable":
+			return <Deployable partModuleState={partModuleState} />;
+		case "PartComponentModule_Light":
+			return <Light partModuleState={partModuleState} />;
+		case "PartComponentModule_Engine":
+			return <Engine partModuleState={partModuleState} />;
+		case "PartComponentModule_WheelBase":
+			return <WheelBase partModuleState={partModuleState} />;
+		case "PartComponentModule_WheelSteering":
+			return <WheelSteering partModuleState={partModuleState} />;
+		case "PartComponentModule_WheelBrakes":
+			return <WheelBrakes partModuleState={partModuleState} />;
+		case "PartComponentModule_WheelSuspension":
+			return <WheelSuspension partModuleState={partModuleState} />;
+		case "PartComponentModule_SolarPanel":
+			return <SolarPanel partModuleState={partModuleState} />;
 
 		// TODO local data for these parts doesn't seem to exist, may be able to get data from elsewhere
 		case "PartComponentModule_CrewedInterior":
 		case "PartComponentModule_ToggleCrossfeed":
 		case "PartComponentModule_FuelLine":
+		case "PartComponentModule_WheelLock":
+		case "PartComponentModule_ReinforcedConnection":
+		case "PartComponentModule_StatusLight":
+			return null;
+		// TODO these parts have local data, but not clear if/how to display it
+		case "PartComponentModule_Fairing":
 			return null;
 
 		default:

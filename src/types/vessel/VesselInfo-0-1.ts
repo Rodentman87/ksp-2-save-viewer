@@ -3,7 +3,7 @@ import {
 	GuidWithDebugName_0_1_0,
 	Location_0_1,
 	Quaternion,
-	Vector3D,
+	Vector3,
 } from "../common/Common";
 import { SymmetrySets_0_1 } from "./SymmetrySets-0-1";
 
@@ -69,7 +69,7 @@ export interface Maneuver_0_1 {
 	NodeID: string;
 	NodeName: string;
 	Time: number;
-	BurnVector: Vector3D;
+	BurnVector: Vector3;
 	BurnRequiredDeltaV: number;
 	BurnDuration: number;
 }
@@ -132,8 +132,8 @@ export interface PartState_0_1 {
 	partStatus: string; // TODO enum? maybe?
 	attachnodeStates: AttachnodeState_0_1[];
 	resources: Record<string, Resource_0_1>;
-	localPosition: Vector3D;
-	originalAttachLocalPosition: Vector3D;
+	localPosition: Vector3;
+	originalAttachLocalPosition: Vector3;
 	localRotation: Quaternion;
 	UserRotation: Quaternion;
 	isMirrored: boolean;
@@ -149,7 +149,7 @@ export interface AttachnodeState_0_1 {
 	AttachedPartGuid: GuidWithDebugName_0_1_0;
 	attachedPartNodeID: string;
 	SizeForDynamic: number;
-	LocalPositionForDynamic: Vector3D;
+	LocalPositionForDynamic: Vector3;
 	LocalRotationForDynamic: Quaternion;
 }
 

@@ -58,14 +58,14 @@ export interface RigidbodyState_0_1 {
 	 */
 	referenceTransformGuid: string;
 	referenceFrameType: string; // TODO enum?
-	localVelocity: Vector3D;
-	localAngularVelocity: Vector3D;
-	localPosition: Vector3D;
+	localVelocity: Vector3;
+	localAngularVelocity: Vector3;
+	localPosition: Vector3;
 	localRotation: Quaternion;
 	PhysicsMode: string; // TODO enum?
 }
 
-export interface Vector3D {
+export interface Vector3 {
 	x: number;
 	y: number;
 	z: number;

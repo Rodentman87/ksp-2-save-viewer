@@ -89,6 +89,25 @@ const VesselLocationCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 				</div>
 			);
 			break;
+		case "SubOrbital":
+			innerPanelData = (
+				<div>
+					<p>
+						Suborbital flight over{" "}
+						{vessel.location.serializedOrbit.referenceBodyGuid}
+					</p>
+				</div>
+			);
+			break;
+		case "PreLaunch":
+			innerPanelData = (
+				<div>
+					<p>
+						Pre-launch on {vessel.location.serializedOrbit.referenceBodyGuid}
+					</p>
+				</div>
+			);
+			break;
 	}
 
 	return (

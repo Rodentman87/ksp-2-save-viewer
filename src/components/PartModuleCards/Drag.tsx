@@ -1,6 +1,6 @@
 import { EuiFieldText, EuiForm, EuiFormRow } from "@elastic/eui";
 import React, { useMemo } from "react";
-import { Vector3D } from "../../types/common/Common";
+import { Vector3 } from "../../types/common/Common";
 import {
 	DataObject_0_1,
 	ModuleData_0_1,
@@ -11,9 +11,9 @@ import { PartModuleCardBase } from "./PartModuleCard";
 
 type DragData = ModuleData_0_1 & {
 	DataObject: DataObject_0_1 & {
-		DragForceDirection: ValueWithContextKey<Vector3D>;
+		DragForceDirection: ValueWithContextKey<Vector3>;
 		DragForceMagnitude: ValueWithContextKey<number>;
-		LiftForceDirection: ValueWithContextKey<Vector3D>;
+		LiftForceDirection: ValueWithContextKey<Vector3>;
 		LiftForceMagnitude: ValueWithContextKey<number>;
 		ReferenceArea: ValueWithContextKey<number>;
 		ExposedArea: ValueWithContextKey<number>;

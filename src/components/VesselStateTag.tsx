@@ -23,6 +23,12 @@ export const VesselStateTag: React.FC<{ state: VesselSituations }> = ({
 					Flying
 				</span>
 			);
+		case "PreLaunch":
+			return (
+				<span className="rounded-md bg-orange-300 px-1 text-black text-sm">
+					Pre-Launch
+				</span>
+			);
 		default:
 			return (
 				<span className="rounded-md bg-gray-300 px-1 text-black text-sm">

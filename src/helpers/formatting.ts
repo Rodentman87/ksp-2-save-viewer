@@ -1,6 +1,6 @@
-import { Color, Vector3D } from "../types/common/Common";
+import { Color, Vector3 } from "../types/common/Common";
 
-export function formatSpeed(speed: Vector3D) {
+export function formatSpeed(speed: Vector3) {
 	const fullSpeed = Math.sqrt(
 		speed.x * speed.x + speed.y * speed.y + speed.z * speed.z
 	);
