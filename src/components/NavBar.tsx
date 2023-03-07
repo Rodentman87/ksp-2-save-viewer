@@ -12,6 +12,7 @@ import {
 import { motion } from "framer-motion";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { useSaveFile } from "../SaveFileContext";
 import { useTheme } from "../ThemeContext";
 
@@ -56,7 +57,9 @@ export const NavBar: React.FC = () => {
 					sections={[
 						{
 							items: [
-								<EuiHeaderLogo iconType="globe">
+								<EuiHeaderLogo
+									iconType={() => <Logo className="inline-block text-white" />}
+								>
 									KSP 2 Save Viewer
 								</EuiHeaderLogo>,
 								<EuiHeaderLink
