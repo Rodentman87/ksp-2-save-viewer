@@ -46,12 +46,30 @@ export class Save {
 		this.travelLog = new TravelLog(saveFile.TravelLogData, this);
 	}
 
+	serialize(): SaveFile_0_1_0 {
+		return {
+			Metadata: this.Metadata,
+			Properties: this.Properties,
+			GalaxyDefinitionKey: this.GalaxyDefinitionKey,
+			SessionManager: this.SessionManager,
+			SessionGuid: this.SessionGuid,
+			Agencies: this.agencies.map((agency) => agency.serialize()),
+			CampaignPlayers: this.CampaignPlayers,
+			Vessels: this.vessels.map((vessel) => vessel.serialize()),
+			missionData: this.missionData,
+			ColonyData: this.ColonyData,
+			KerbalData: this.KerbalData,
+			PlantedFlags: this.plantedFlags.map((flag) => flag.serialize()),
+			TravelLogData: this.travelLog.serialize(),
+		};
+	}
+
 	export() {
 		const element = document.createElement("a");
 		element.setAttribute(
 			"href",
 			"data:text/plain;charset=utf-8," +
-				encodeURIComponent(JSON.stringify(this))
+				encodeURIComponent(JSON.stringify(this.serialize()))
 		);
 		element.setAttribute("download", this.Metadata.Name + ".json");
 

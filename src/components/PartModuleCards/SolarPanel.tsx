@@ -33,15 +33,15 @@ type SolarPanelData = ModuleData_0_1 & {
 export const SolarPanel: React.FC<{
 	partModuleState: PartModuleState_0_1;
 }> = ({ partModuleState }) => {
-	const solarPanelData = useMemo(() => {
-		return partModuleState.ModuleData.find(
-			(dat) => dat.Name === "Data_SolarPanel"
-		) as SolarPanelData;
-	}, [partModuleState]);
-	const deployableData = useMemo(() => {
-		return partModuleState.ModuleData.find(
-			(dat) => dat.Name === "Data_Deployable"
-		) as DeployableData;
+	const { solarPanelData, deployableData } = useMemo(() => {
+		return {
+			solarPanelData: partModuleState.ModuleData.find(
+				(dat) => dat.Name === "Data_SolarPanel"
+			) as SolarPanelData,
+			deployableData: partModuleState.ModuleData.find(
+				(dat) => dat.Name === "Data_Deployable"
+			) as DeployableData,
+		};
 	}, [partModuleState]);
 
 	return (

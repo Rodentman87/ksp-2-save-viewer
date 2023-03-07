@@ -24,4 +24,16 @@ export class PlantedFlag {
 		this.FlagState = flag.FlagState;
 		this.Location = flag.Location;
 	}
+
+	serialize(): SavePlantedFlag_0_1_0 {
+		return {
+			Guid: this.Guid,
+			OwnerPlayerGuidString: this.OwnerPlayerGuidString,
+			OwnerPlayerId: this.OwnerPlayerId,
+			AuthorityPlayerId: this.AuthorityPlayerId,
+			FlagDefinition: this.FlagDefinition,
+			FlagState: this.FlagState,
+			Location: this.Location,
+		};
+	}
 }

@@ -1,4 +1,14 @@
-import { EuiHeader, EuiHeaderLink, EuiHeaderLogo } from "@elastic/eui";
+import {
+	EuiButton,
+	EuiHeader,
+	EuiHeaderLink,
+	EuiHeaderLogo,
+	EuiModal,
+	EuiModalBody,
+	EuiModalFooter,
+	EuiModalHeader,
+	EuiText,
+} from "@elastic/eui";
 import { motion } from "framer-motion";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,6 +18,7 @@ import { useTheme } from "../ThemeContext";
 export const NavBar: React.FC = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const [showExportModal, setShowExportModal] = React.useState(false);
 
 	const save = useSaveFile();
 
@@ -15,6 +26,30 @@ export const NavBar: React.FC = () => {
 
 	return (
 		<>
+			{showExportModal && (
+				<EuiModal onClose={() => setShowExportModal(false)}>
+					<EuiModalHeader>
+						<EuiText>
+							<h2>Export Save</h2>
+						</EuiText>
+					</EuiModalHeader>
+					<EuiModalBody>
+						Warning, the save export is not 100% tested and may cause
+						inconsistencies with your previous save file. It is recommended that
+						you backup your save file before overwriting it with the export.
+					</EuiModalBody>
+					<EuiModalFooter>
+						<EuiButton
+							color="danger"
+							onClick={() => {
+								save.export();
+							}}
+						>
+							Export Save
+						</EuiButton>
+					</EuiModalFooter>
+				</EuiModal>
+			)}
 			<motion.div className="absolute top-0 left-0 w-screen">
 				<EuiHeader
 					theme="dark"
@@ -84,7 +119,7 @@ export const NavBar: React.FC = () => {
 							items: [
 								<EuiHeaderLink
 									onClick={() => {
-										save.export();
+										setShowExportModal(true);
 									}}
 								>
 									Export Save

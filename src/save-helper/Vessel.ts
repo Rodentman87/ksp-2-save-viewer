@@ -50,6 +50,27 @@ export class Vessel {
 		this.parts = vessel.parts;
 	}
 
+	serialize(): Vessel_0_1 {
+		return {
+			Version: this.Version,
+			Guid: this.Guid,
+			OwnerPlayerGuidString: this.OwnerPlayerGuidString,
+			OwnerPlayerId: this.OwnerPlayerId,
+			AuthorityPlayerId: this.AuthorityPlayerId,
+			AssemblyOABConfig: this.AssemblyOABConfig,
+			AssemblyDefinition: this.AssemblyDefinition,
+			stagingState: this.stagingState,
+			partOwnerState: this.partOwnerState,
+			maneuverPlanState: this.maneuverPlanState,
+			vesselState: this.vesselState,
+			kerbalState: this.kerbalState,
+			IsDebris: this.IsDebris,
+			SymmetrySets: this.SymmetrySets,
+			location: this.location,
+			parts: this.parts,
+		};
+	}
+
 	getTravelLogObject() {
 		return this.save.travelLog.objects.get(this.Guid.Guid);
 	}

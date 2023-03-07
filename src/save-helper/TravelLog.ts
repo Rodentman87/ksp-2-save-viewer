@@ -18,6 +18,15 @@ export class TravelLog {
 			(event) => new TravelLogEvent(event, this)
 		);
 	}
+
+	serialize(): SaveTravelLogData_0_1_0 {
+		return {
+			Objects: Array.from(this.objects.values()).map((object) =>
+				object.serialize()
+			),
+			ObjectEvents: this.events.map((event) => event.serialize()),
+		};
+	}
 }
 
 export class TravelLogObject {
@@ -29,6 +38,13 @@ export class TravelLogObject {
 		this.TravelObjectId = object.TravelObjectId;
 		this.Statistics = object.Statistics;
 		this.events = [];
+	}
+
+	serialize(): SaveTravelLogObject_0_1_0 {
+		return {
+			TravelObjectId: this.TravelObjectId,
+			Statistics: this.Statistics,
+		};
 	}
 }
 
@@ -52,5 +68,14 @@ export class TravelLogEvent {
 				object.events.push(this);
 			}
 		});
+	}
+
+	serialize(): SaveTravelLogObjectEvent_0_1_0 {
+		return {
+			TravelObjectIds: this.TravelObjectIds,
+			EventKey: this.EventKey,
+			UT: this.UT,
+			FlightReportArgs: this.FlightReportArgs,
+		};
 	}
 }

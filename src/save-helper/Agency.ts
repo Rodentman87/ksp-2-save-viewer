@@ -31,6 +31,17 @@ export class Agency {
 		this.MissionData = agency.MissionData;
 	}
 
+	serialize(): SaveAgency_0_1_0 {
+		return {
+			AgencyId: this.AgencyId,
+			AgencyName: this.AgencyName,
+			ColorBase: this.ColorBase,
+			ColorAccent: this.ColorAccent,
+			FlagSpriteLocation: this.FlagSpriteLocation,
+			MissionData: this.MissionData,
+		};
+	}
+
 	getColorsAsGradient() {
 		const primary = this.colorBaseRGBA;
 		const accent = this.colorAccentRGBA;
