@@ -59,7 +59,15 @@ export function getBodyStats(name: string) {
 	}
 }
 
-export const ResourceStats = {
+export interface ResourceStat {
+	name: string;
+	abbreviation: string;
+	units: string;
+	barColor: string;
+	darkThemeBarColor?: string;
+}
+
+export const ResourceStats: Record<string, ResourceStat> = {
 	ElectricCharge: {
 		name: "Electric Charge",
 		abbreviation: "EC",
@@ -106,7 +114,8 @@ export const ResourceStats = {
 		name: "Intake Air",
 		abbreviation: "IA",
 		units: "t",
-		barColor: "#ffffff",
+		barColor: "#00e5ff",
+		darkThemeBarColor: "#ffffff",
 	},
 };
 

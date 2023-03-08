@@ -2,6 +2,7 @@ import { EuiProgress } from "@elastic/eui";
 import React, { useMemo } from "react";
 import { formatNumberAtMostTwoDecimals } from "../helpers/formatting";
 import { getResourceStats } from "../helpers/rawStats";
+import { useTheme } from "../ThemeContext";
 
 export const ResourceBar: React.FC<{
 	name: string;
@@ -12,12 +13,20 @@ export const ResourceBar: React.FC<{
 		return getResourceStats(name);
 	}, [name]);
 
+	const theme = useTheme();
+
+	const barColor = useMemo(() => {
+		if (!theme.light && resourceStats.darkThemeBarColor)
+			return resourceStats.darkThemeBarColor;
+		return resourceStats.barColor;
+	}, [theme, resourceStats]);
+
 	return (
 		<div>
 			<EuiProgress
 				label={resourceStats.name}
 				size="m"
-				color={resourceStats.barColor}
+				color={barColor}
 				max={total}
 				value={current}
 				valueText={`${formatNumberAtMostTwoDecimals(
