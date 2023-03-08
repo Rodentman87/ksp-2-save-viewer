@@ -4,8 +4,10 @@ import {
 	PartModuleState_0_1,
 	Part_0_1,
 } from "../../types/vessel/VesselInfo-0-1";
+import { CargoBay } from "./CargoBay";
 import { ColorCard } from "./Color";
 import { Command } from "./Command";
+import { ControlSurface } from "./ControlSurface";
 import { DataTransmitter } from "./DataTransmitter";
 import { Deployable } from "./Deployable";
 import { DockingNode } from "./DockingNode";
@@ -16,9 +18,11 @@ import { Gimbal } from "./Gimbal";
 import { Light } from "./Light";
 import { LitPart } from "./LitPart";
 import { Parachute } from "./Parachute";
+import { ProceduralPart } from "./ProceduralPart";
 import { RCS } from "./RCS";
 import { ReactionWheel } from "./ReactionWheel";
 import { ResourceCapacities } from "./ResourceCapacities";
+import { ResourceIntake } from "./ResourceIntake";
 import { SolarPanel } from "./SolarPanel";
 import { WheelBase } from "./WheelBase";
 import { WheelBrakes } from "./WheelBrakes";
@@ -72,6 +76,14 @@ export const PartModuleCard: React.FC<{
 			return <WheelSuspension partModuleState={partModuleState} />;
 		case "PartComponentModule_SolarPanel":
 			return <SolarPanel partModuleState={partModuleState} />;
+		case "PartComponentModule_CargoBay":
+			return <CargoBay partModuleState={partModuleState} />;
+		case "PartComponentModule_ResourceIntake":
+			return <ResourceIntake partModuleState={partModuleState} />;
+		case "PartComponentModule_ControlSurface":
+			return <ControlSurface partModuleState={partModuleState} />;
+		case "PartComponentModule_ProceduralPart":
+			return <ProceduralPart partModuleState={partModuleState} />;
 
 		// TODO local data for these parts doesn't seem to exist, may be able to get data from elsewhere
 		case "PartComponentModule_CrewedInterior":

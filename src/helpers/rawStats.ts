@@ -102,6 +102,12 @@ export const ResourceStats = {
 		units: "t",
 		barColor: "#d5ae00",
 	},
+	IntakeAir: {
+		name: "Intake Air",
+		abbreviation: "IA",
+		units: "t",
+		barColor: "#ffffff",
+	},
 };
 
 export function getResourceStats(name: string) {
