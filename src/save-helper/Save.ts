@@ -15,6 +15,9 @@ import { Vessel } from "./Vessel";
 
 export class Save {
 	Metadata: SaveMetadata_0_1_0;
+	private MetadataChangeListeners = new Set<
+		(metadata: SaveMetadata_0_1_0) => void
+	>();
 	Properties: SaveProperties_0_1_0;
 	GalaxyDefinitionKey: string;
 	SessionManager: SaveSessionManager_0_1_0;
@@ -44,6 +47,21 @@ export class Save {
 			(flag) => new PlantedFlag(flag, this)
 		);
 		this.travelLog = new TravelLog(saveFile.TravelLogData, this);
+
+		this.subscribeToMetadataChange = this.subscribeToMetadataChange.bind(this);
+	}
+
+	mergeMetadata(metadata: Partial<SaveMetadata_0_1_0>) {
+		this.Metadata = {
+			...this.Metadata,
+			...metadata,
+		};
+		this.MetadataChangeListeners.forEach((callback) => callback(this.Metadata));
+	}
+
+	subscribeToMetadataChange(callback: (metadata: SaveMetadata_0_1_0) => void) {
+		this.MetadataChangeListeners.add(callback);
+		return () => this.MetadataChangeListeners.delete(callback);
 	}
 
 	serialize(): SaveFile_0_1_0 {

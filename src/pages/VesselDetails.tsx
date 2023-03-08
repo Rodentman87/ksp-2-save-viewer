@@ -200,7 +200,10 @@ const PartSelector: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 								onClick={() => setSelectedPartIndex(index)}
 								style={style}
 								className={classNames("w-96 h-12 p-4 rounded-md text-left", {
-									"bg-slate-400 text-black": index === selectedPartIndex,
+									"bg-slate-700 text-white":
+										index === selectedPartIndex && !light,
+									"bg-slate-200 text-black":
+										index === selectedPartIndex && light,
 								})}
 							>
 								{part.partName}

@@ -5,24 +5,24 @@ import {
 	EuiPanel,
 } from "@elastic/eui";
 import React, { useMemo } from "react";
-import { useSaveFile } from "../SaveFileContext";
+import { useSaveFileMetadata } from "../SaveFileContext";
 
 export const Home: React.FC = () => {
-	const saveFile = useSaveFile();
+	const metadata = useSaveFileMetadata();
 
 	const createdDate = useMemo(() => {
-		return new Date(saveFile.Metadata.SaveCreatedTime);
-	}, [saveFile.Metadata.SaveCreatedTime]);
+		return new Date(metadata.SaveCreatedTime);
+	}, [metadata.SaveCreatedTime]);
 
 	const universeTime = useMemo(() => {
-		const time = saveFile.Metadata.UniverseTime;
+		const time = metadata.UniverseTime;
 		const days = Math.floor(time / 21600);
 		const hours = Math.floor((time % 21600) / 900);
 		const minutes = Math.floor((time % 900) / 15);
 		const seconds = Math.floor((time % 15) / 0.25);
 
 		return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-	}, [saveFile.Metadata.UniverseTime]);
+	}, [metadata.UniverseTime]);
 
 	return (
 		<EuiPageTemplate grow>
@@ -38,15 +38,15 @@ export const Home: React.FC = () => {
 							<h2 className="text-xl font-bold mb-2">Save File</h2>
 							<div className="grid grid-cols-2 gap-1">
 								<span>Name</span>
-								<span>{saveFile.Metadata.Name}</span>
+								<span>{metadata.Name}</span>
 								<span>Description</span>
-								<span>{saveFile.Metadata.Description}</span>
+								<span>{metadata.Description}</span>
 								<span>Version</span>
-								<span>{saveFile.Metadata.VersionString}</span>
+								<span>{metadata.VersionString}</span>
 								<span>Created</span>
 								<span>{createdDate.toLocaleString()}</span>
 								<span>Save Type</span>
-								<span>{saveFile.Metadata.SavedGameType}</span>
+								<span>{metadata.SavedGameType}</span>
 							</div>
 						</EuiPanel>
 					</EuiFlexItem>
@@ -57,15 +57,13 @@ export const Home: React.FC = () => {
 								<span>Universe Time</span>
 								<span>{universeTime}</span>
 								<span>Mode</span>
-								<span>{saveFile.Metadata.CampaignMode}</span>
+								<span>{metadata.CampaignMode}</span>
 								<span>Type</span>
-								<span>{saveFile.Metadata.CampaignType}</span>
+								<span>{metadata.CampaignType}</span>
 								<span>Difficulty</span>
-								<span>{saveFile.Metadata.DifficultyLevel}</span>
+								<span>{metadata.DifficultyLevel}</span>
 								<span>First Time User Experience Enabled</span>
-								<span>
-									{saveFile.Metadata.NewPlayerIsFTUEEnabled ? "Yes" : "No"}
-								</span>
+								<span>{metadata.NewPlayerIsFTUEEnabled ? "Yes" : "No"}</span>
 							</div>
 						</EuiPanel>
 					</EuiFlexItem>
@@ -75,55 +73,39 @@ export const Home: React.FC = () => {
 							<div className="grid grid-cols-2 gap-1">
 								<span>Allow Revert</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.AllowRevert
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.AllowRevert ? "Yes" : "No"}
 								</span>
 								<span>Allow Quick Load</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.AllowQuickLoad
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.AllowQuickLoad ? "Yes" : "No"}
 								</span>
 								<span>Include Stock Vessels</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.IncludeStockVessels
+									{metadata.DifficultyOptions.IncludeStockVessels
 										? "Yes"
 										: "No"}
 								</span>
 								<span>Docking Tolerance</span>
-								<span>
-									{saveFile.Metadata.DifficultyOptions.DockingTolerance}
-								</span>
+								<span>{metadata.DifficultyOptions.DockingTolerance}</span>
 								<span>CommNet Required</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.CommNetRequired
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.CommNetRequired ? "Yes" : "No"}
 								</span>
 								<span>Unbreakable Joints</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.UnbreakableJoints
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.UnbreakableJoints ? "Yes" : "No"}
 								</span>
 								<span>No Crash Damage</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.NoCrashDamage
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.NoCrashDamage ? "Yes" : "No"}
 								</span>
 								<span>Infinite Fuel</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.InfiniteFuel
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.InfiniteFuel ? "Yes" : "No"}
 								</span>
 								<span>Infinite Electric Charge</span>
 								<span>
-									{saveFile.Metadata.DifficultyOptions.InfinitePower
-										? "Yes"
-										: "No"}
+									{metadata.DifficultyOptions.InfinitePower ? "Yes" : "No"}
 								</span>
 							</div>
 						</EuiPanel>
