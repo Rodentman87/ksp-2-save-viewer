@@ -105,10 +105,13 @@ export interface VesselState_0_1 {
 }
 
 export type VesselSituations =
+	| "PreLaunch"
 	| "Landed"
-	| "Orbiting"
+	| "Splashed"
+	| "Flying"
 	| "SubOrbital"
-	| "PreLaunch";
+	| "Orbiting"
+	| "Escaping";
 
 export interface KerbalState_0_1 {
 	CurrentLadderPartId: GuidWithDebugName_0_1_0 | null;

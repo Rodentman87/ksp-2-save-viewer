@@ -1,6 +1,7 @@
 import {
 	EuiDataGrid,
 	EuiDataGridColumn,
+	EuiDataGridStyle,
 	EuiEmptyPrompt,
 	EuiPageTemplate,
 } from "@elastic/eui";
@@ -52,6 +53,17 @@ export const Flags: React.FC = () => {
 		},
 	});
 
+	const [storedStyle, setStoredStyle] = useLocalStorageState<EuiDataGridStyle>(
+		"flagsGridStyle",
+		{
+			defaultValue: {},
+			serializer: {
+				stringify: (value) => JSON.stringify(value),
+				parse: (value) => JSON.parse(value),
+			},
+		}
+	);
+
 	return (
 		<EuiPageTemplate grow>
 			<EuiPageTemplate.Header
@@ -69,6 +81,12 @@ export const Flags: React.FC = () => {
 					<EuiDataGrid
 						color="dark"
 						aria-label="Flags"
+						gridStyle={{
+							...storedStyle,
+							onChange: (newStyle) => {
+								setStoredStyle(newStyle);
+							},
+						}}
 						columns={columns}
 						columnVisibility={{
 							visibleColumns,

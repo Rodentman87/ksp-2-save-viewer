@@ -2,6 +2,7 @@ import {
 	EuiButtonEmpty,
 	EuiDataGrid,
 	EuiDataGridColumn,
+	EuiDataGridStyle,
 	EuiEmptyPrompt,
 	EuiPageTemplate,
 } from "@elastic/eui";
@@ -77,6 +78,17 @@ export const Vessels: React.FC = () => {
 		},
 	});
 
+	const [storedStyle, setStoredStyle] = useLocalStorageState<EuiDataGridStyle>(
+		"vesselsGridStyle",
+		{
+			defaultValue: {},
+			serializer: {
+				stringify: (value) => JSON.stringify(value),
+				parse: (value) => JSON.parse(value),
+			},
+		}
+	);
+
 	return (
 		<EuiPageTemplate grow>
 			<EuiPageTemplate.Header
@@ -94,6 +106,12 @@ export const Vessels: React.FC = () => {
 					<EuiDataGrid
 						color="dark"
 						aria-label="Vessels"
+						gridStyle={{
+							...storedStyle,
+							onChange: (newStyle) => {
+								setStoredStyle(newStyle);
+							},
+						}}
 						columns={columns}
 						columnVisibility={{
 							visibleColumns,
@@ -113,8 +131,16 @@ export const Vessels: React.FC = () => {
 									return saveFile.getPlayer(vessel.OwnerPlayerId)?.PlayerName;
 								case "location":
 									switch (vessel.vesselState.Situation) {
+										case "PreLaunch":
+											return `Pre-launch on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
 										case "Landed":
 											return `Landed on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										case "Splashed":
+											return `Splashed down on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										case "Flying":
+											return `Flying above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										case "SubOrbital":
+											return `Sub-orbital flight above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
 										case "Orbiting":
 											const apoapsis =
 												vessel.location.serializedOrbit.semiMajorAxis *
@@ -129,10 +155,8 @@ export const Vessels: React.FC = () => {
 											} (${formatMeters(apoapsis)}, ${formatMeters(
 												periapsis
 											)})`;
-										case "SubOrbital":
-											return `Sub-orbital flight above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
-										case "PreLaunch":
-											return `Pre-launch on ${vessel.location.serializedOrbit.referenceBodyGuid}`;
+										case "Escaping":
+											return `Escaping ${vessel.location.serializedOrbit.referenceBodyGuid}`;
 										default:
 											return `Unknown flight situation (${vessel.vesselState.Situation}) above ${vessel.location.serializedOrbit.referenceBodyGuid}`;
 									}

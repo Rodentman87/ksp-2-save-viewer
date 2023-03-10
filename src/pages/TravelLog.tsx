@@ -6,11 +6,11 @@ import {
 import React, { useMemo } from "react";
 import { formatTime } from "../helpers/formatting";
 import { Save } from "../save-helper/Save";
+import { TravelLogEvent } from "../save-helper/TravelLog";
 import { useSaveFile } from "../SaveFileContext";
-import { SaveTravelLogObjectEvent_0_1_0 } from "../types/save/SaveFile-0-1-0";
 
 function eventToTimelineItem(
-	event: SaveTravelLogObjectEvent_0_1_0,
+	event: TravelLogEvent,
 	save: Save
 ): EuiTimelineItemProps {
 	const timeSince = save.getTimeSince(event.UT);
@@ -51,13 +51,6 @@ function eventToTimelineItem(
 					event.FlightReportArgs[0]
 				} SOI - ${formatTime(timeSince)} ago`,
 			};
-		case "partCrashed":
-			return {
-				icon: "securitySignalDetected",
-				children: `Part crashed (${event.FlightReportArgs[0]}) - ${formatTime(
-					timeSince
-				)} ago`,
-			};
 		case "vesselDestroyed":
 			return {
 				icon: "trash",
@@ -67,10 +60,55 @@ function eventToTimelineItem(
 						: "unknown vessel"
 				} destroyed - ${formatTime(timeSince)} ago`,
 			};
+		case "vesselRecovered":
+			return {
+				icon: "checkInCircleFilled",
+				children: `Vessel ${
+					vessels[0]
+						? vessels[0].AssemblyDefinition.assemblyName
+						: "unknown vessel"
+				} recovered - ${formatTime(timeSince)} ago`,
+			};
+		case "partCrashed":
+			return {
+				icon: "securitySignalDetected",
+				children: `Part crashed (${event.FlightReportArgs[0]}) - ${formatTime(
+					timeSince
+				)} ago`,
+			};
+		case "partExploded":
+			return {
+				icon: "securitySignalDetected",
+				children: `Part exploded (${event.FlightReportArgs[0]}) - ${formatTime(
+					timeSince
+				)} ago`,
+			};
+		case "partExplodedOverheat":
+			return {
+				icon: "temperature",
+				children: `Part exploded due to overheating (${
+					event.FlightReportArgs[0]
+				}) - ${formatTime(timeSince)} ago`,
+			};
+		case "partJointBroken":
+			return {
+				icon: "securitySignalDetected",
+				children: `Part joint broke (${
+					event.FlightReportArgs[0]
+				}) - ${formatTime(timeSince)} ago`,
+			};
 	}
 	return {
 		icon: "questionInCircle",
-		children: `Unknown event - ${formatTime(timeSince)} ago`,
+		children: (
+			<>
+				Unknown event - {formatTime(timeSince)} ago
+				<details>
+					<summary>Event JSON</summary>
+					<pre>{JSON.stringify(event.serialize(), null, 2)}</pre>
+				</details>
+			</>
+		),
 	};
 }
 

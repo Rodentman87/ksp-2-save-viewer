@@ -29,6 +29,7 @@ import { WheelBrakes } from "./WheelBrakes";
 import { WheelSteering } from "./WheelSteering";
 import { WheelSuspension } from "./WheelSuspension";
 
+// TODO Maybe rework this into a plugin system?
 export const PartModuleCard: React.FC<{
 	partModuleState: PartModuleState_0_1;
 	part: Part_0_1;

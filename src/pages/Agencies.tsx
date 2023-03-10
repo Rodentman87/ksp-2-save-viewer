@@ -1,4 +1,10 @@
-import { EuiDataGrid, EuiDataGridColumn, EuiPageTemplate } from "@elastic/eui";
+import {
+	EuiDataGrid,
+	EuiDataGridColumn,
+	EuiDataGridStyle,
+	EuiEmptyPrompt,
+	EuiPageTemplate,
+} from "@elastic/eui";
 import React from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { useSaveFile } from "../SaveFileContext";
@@ -44,6 +50,17 @@ export const Agencies: React.FC = () => {
 		},
 	});
 
+	const [storedStyle, setStoredStyle] = useLocalStorageState<EuiDataGridStyle>(
+		"agenciesGridStyle",
+		{
+			defaultValue: {},
+			serializer: {
+				stringify: (value) => JSON.stringify(value),
+				parse: (value) => JSON.parse(value),
+			},
+		}
+	);
+
 	return (
 		<EuiPageTemplate grow>
 			<EuiPageTemplate.Header
@@ -52,33 +69,46 @@ export const Agencies: React.FC = () => {
 				restrictWidth={false}
 			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
-				<EuiDataGrid
-					color="dark"
-					aria-label="Agencies"
-					columns={columns}
-					columnVisibility={{
-						visibleColumns,
-						setVisibleColumns,
-					}}
-					rowCount={saveFile.agencies.length}
-					renderCellValue={({ rowIndex, columnId, setCellProps }) => {
-						const agency = saveFile.agencies[rowIndex];
+				{saveFile.agencies.length === 0 ? (
+					<EuiEmptyPrompt
+						title={<h2>No Agencies Found</h2>}
+						body={<span>Now how did you manage that?</span>}
+					/>
+				) : (
+					<EuiDataGrid
+						color="dark"
+						aria-label="Agencies"
+						gridStyle={{
+							...storedStyle,
+							onChange: (newStyle) => {
+								setStoredStyle(newStyle);
+							},
+						}}
+						columns={columns}
+						columnVisibility={{
+							visibleColumns,
+							setVisibleColumns,
+						}}
+						rowCount={saveFile.agencies.length}
+						renderCellValue={({ rowIndex, columnId, setCellProps }) => {
+							const agency = saveFile.agencies[rowIndex];
 
-						switch (columnId) {
-							case "name":
-								return agency.AgencyName;
-							case "colors":
-								setCellProps({
-									style: {
-										background: agency.getColorsAsGradient(),
-									},
-								});
-								return "";
-						}
-					}}
-					inMemory={{ level: "sorting" }}
-					sorting={{ columns: sort, onSort: setSort }}
-				/>
+							switch (columnId) {
+								case "name":
+									return agency.AgencyName;
+								case "colors":
+									setCellProps({
+										style: {
+											background: agency.getColorsAsGradient(),
+										},
+									});
+									return "";
+							}
+						}}
+						inMemory={{ level: "sorting" }}
+						sorting={{ columns: sort, onSort: setSort }}
+					/>
+				)}
 			</EuiPageTemplate.Section>
 		</EuiPageTemplate>
 	);

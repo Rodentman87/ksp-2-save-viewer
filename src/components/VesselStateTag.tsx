@@ -5,16 +5,28 @@ export const VesselStateTag: React.FC<{ state: VesselSituations }> = ({
 	state,
 }) => {
 	switch (state) {
+		case "PreLaunch":
+			return (
+				<span className="rounded-md bg-orange-300 px-1 text-black text-sm">
+					Pre-Launch
+				</span>
+			);
 		case "Landed":
 			return (
 				<span className="rounded-md bg-green-300 px-1 text-black text-sm">
 					Landed
 				</span>
 			);
-		case "Orbiting":
+		case "Splashed":
 			return (
 				<span className="rounded-md bg-blue-300 px-1 text-black text-sm">
-					Orbiting
+					Splashed
+				</span>
+			);
+		case "Flying":
+			return (
+				<span className="rounded-md bg-yellow-300 px-1 text-black text-sm">
+					Flying
 				</span>
 			);
 		case "SubOrbital":
@@ -23,10 +35,16 @@ export const VesselStateTag: React.FC<{ state: VesselSituations }> = ({
 					Flying
 				</span>
 			);
-		case "PreLaunch":
+		case "Orbiting":
 			return (
-				<span className="rounded-md bg-orange-300 px-1 text-black text-sm">
-					Pre-Launch
+				<span className="rounded-md bg-purple-300 px-1 text-black text-sm">
+					Orbiting
+				</span>
+			);
+		case "Escaping":
+			return (
+				<span className="rounded-md bg-red-300 px-1 text-black text-sm">
+					Escaping
 				</span>
 			);
 		default:
