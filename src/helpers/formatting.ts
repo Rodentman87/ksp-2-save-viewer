@@ -1,6 +1,9 @@
 import { Color, Vector3 } from "../types/common/Common";
 
-export function formatSpeed(speed: Vector3) {
+export function formatSpeed(speed: Vector3 | number) {
+	if (typeof speed === "number") {
+		return `${speed.toFixed(2)}m/s`;
+	}
 	const fullSpeed = Math.sqrt(
 		speed.x * speed.x + speed.y * speed.y + speed.z * speed.z
 	);

@@ -12,9 +12,9 @@ import {
 import { motion } from "framer-motion";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { useSaveFile } from "../SaveFileContext";
 import { useTheme } from "../ThemeContext";
+import { ReactComponent as Logo } from "../icons/Logo.svg";
 
 export const NavBar: React.FC = () => {
 	const location = useLocation();
@@ -115,6 +115,15 @@ export const NavBar: React.FC = () => {
 									isSelected={location.pathname === "/travel-log"}
 								>
 									Travel Log
+								</EuiHeaderLink>,
+								<EuiHeaderLink
+									onClick={() => {
+										navigate("/stats");
+									}}
+									isActive={location.pathname === "/stats"}
+									isSelected={location.pathname === "/stats"}
+								>
+									Stats
 								</EuiHeaderLink>,
 							],
 						},

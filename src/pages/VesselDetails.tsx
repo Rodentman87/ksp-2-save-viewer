@@ -7,8 +7,10 @@ import {
 } from "@elastic/eui";
 import classNames from "classnames";
 import React, { useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FixedSizeList } from "react-window";
+import { useSaveFile } from "../SaveFileContext";
+import { useTheme } from "../ThemeContext";
 import { PartModuleCard } from "../components/PartModuleCards/PartModuleCard";
 import { ResourceBar } from "../components/ResourceBar";
 import { VesselStateTag } from "../components/VesselStateTag";
@@ -18,8 +20,6 @@ import {
 } from "../helpers/formatting";
 import { getOrbitalStats } from "../helpers/orbitalHelpers";
 import { Vessel } from "../save-helper/Vessel";
-import { useSaveFile } from "../SaveFileContext";
-import { useTheme } from "../ThemeContext";
 import { Vessel_0_1 } from "../types/vessel/VesselInfo-0-1";
 
 export const VesselDetails: React.FC = () => {
@@ -32,9 +32,23 @@ export const VesselDetails: React.FC = () => {
 		return saveFile.getVesselByGuid(vesselId);
 	}, [saveFile, vesselId]);
 
+	const navigate = useNavigate();
+
 	return (
 		<EuiPageTemplate grow>
 			<EuiPageTemplate.Header
+				breadcrumbs={[
+					{
+						text: "Vessels",
+						href: "#/vessels",
+						onClick: () => {
+							navigate("/vessels");
+						},
+					},
+					{
+						text: vessel?.AssemblyDefinition.assemblyName ?? "Unknown Vessel",
+					},
+				]}
 				iconType="launch"
 				pageTitle={vessel?.AssemblyDefinition.assemblyName ?? "Unknown Vessel"}
 				restrictWidth={false}
@@ -185,7 +199,7 @@ const PartSelector: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 	const { light } = useTheme();
 
 	return (
-		<div className="w-full mt-6 flex flex-row gap-2 items-stretch">
+		<div className="flex flex-row items-stretch w-full gap-2 mt-6">
 			<div className="flex flex-col">
 				<FixedSizeList
 					height={600}
@@ -241,7 +255,7 @@ const PartSelector: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 				<EuiPanel
 					hasShadow={false}
 					hasBorder
-					className="flex flex-col gap-1 col-span-2"
+					className="flex flex-col col-span-2 gap-1"
 				>
 					<h2 className="text-xl font-bold">Part JSON</h2>
 					<details>
