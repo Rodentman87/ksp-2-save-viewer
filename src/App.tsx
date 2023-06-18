@@ -157,69 +157,71 @@ function App() {
 							<RouterProvider router={router} />
 						</SaveFileContext.Provider>
 					) : (
-						<div className="absolute flex flex-col gap-4 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-							<AnimatePresence>
-								<motion.div
-									key="upload"
-									layoutId="upload"
-									className="p-6 bg-white rounded-md shadow-lg"
-								>
-									<h1 className="mb-2 text-2xl font-bold text-black">
-										Please Upload a Save File (.json)
-										<EuiToolTip
-											position="right"
-											content="Saves can be found in 'users/[username]/AppData/LocalLow/Intercept Games/Kerbal Space Program 2/Saves/SinglePlayer/[savename]/'"
-										>
-											<EuiIcon
-												tabIndex={0}
-												type="questionInCircle"
-												className="mb-1 ml-1"
-											/>
-										</EuiToolTip>
-									</h1>
-									<input
-										type="file"
-										accept=".json,application/json"
-										className="text-black"
-										onChange={handleFileChange}
-									/>
-									{error && <p className="mt-2 text-red-500">{error}</p>}
-								</motion.div>
-								{lastSaveFile && (
+						<div className="flex flex-col items-center justify-center">
+							<div className="flex flex-col gap-4">
+								<AnimatePresence>
 									<motion.div
-										key="lastSaveFile"
-										layoutId="lastSaveFile"
-										initial={{ y: 10, opacity: 0 }}
-										animate={{ y: 0, opacity: 1 }}
-										exit={{ y: 10, opacity: 0 }}
+										key="upload"
+										layoutId="upload"
 										className="p-6 bg-white rounded-md shadow-lg"
 									>
-										<h2 className="mb-2 text-xl font-bold text-black">
-											Last used save file: {lastSaveFile.Metadata.Name}
-										</h2>
-										<div className="flex flex-row justify-end gap-2">
-											<EuiButton
-												color="danger"
-												onClick={() => {
-													setLastSaveFile(null);
-												}}
+										<h1 className="mb-2 text-2xl font-bold text-black">
+											Please Upload a Save File (.json)
+											<EuiToolTip
+												position="right"
+												content="Saves can be found in 'users/[username]/AppData/LocalLow/Intercept Games/Kerbal Space Program 2/Saves/SinglePlayer/[savename]/'"
 											>
-												Clear
-											</EuiButton>
-											<EuiButton
-												color="primary"
-												onClick={() => {
-													setSaveFile(
-														loadSaveData(JSON.stringify(lastSaveFile))
-													);
-												}}
-											>
-												Load
-											</EuiButton>
-										</div>
+												<EuiIcon
+													tabIndex={0}
+													type="questionInCircle"
+													className="mb-1 ml-1"
+												/>
+											</EuiToolTip>
+										</h1>
+										<input
+											type="file"
+											accept=".json,application/json"
+											className="text-black"
+											onChange={handleFileChange}
+										/>
+										{error && <p className="mt-2 text-red-500">{error}</p>}
 									</motion.div>
-								)}
-							</AnimatePresence>
+									{lastSaveFile && (
+										<motion.div
+											key="lastSaveFile"
+											layoutId="lastSaveFile"
+											initial={{ y: 10, opacity: 0 }}
+											animate={{ y: 0, opacity: 1 }}
+											exit={{ y: 10, opacity: 0 }}
+											className="p-6 bg-white rounded-md shadow-lg"
+										>
+											<h2 className="mb-2 text-xl font-bold text-black">
+												Last used save file: {lastSaveFile.Metadata.Name}
+											</h2>
+											<div className="flex flex-row justify-end gap-2">
+												<EuiButton
+													color="danger"
+													onClick={() => {
+														setLastSaveFile(null);
+													}}
+												>
+													Clear
+												</EuiButton>
+												<EuiButton
+													color="primary"
+													onClick={() => {
+														setSaveFile(
+															loadSaveData(JSON.stringify(lastSaveFile))
+														);
+													}}
+												>
+													Load
+												</EuiButton>
+											</div>
+										</motion.div>
+									)}
+								</AnimatePresence>
+							</div>
 						</div>
 					)}
 				</div>
