@@ -21,6 +21,9 @@ export class Save {
 	Properties: SaveProperties_0_1_0;
 	GalaxyDefinitionKey: string;
 	SessionManager: SaveSessionManager_0_1_0;
+	private SessionManagerChangeListeners = new Set<
+		(sessionManager: SaveSessionManager_0_1_0) => void
+	>();
 	SessionGuid: string;
 	agencies: Agency[];
 	CampaignPlayers: SaveCampaignPlayer_0_1_0[];
@@ -49,6 +52,8 @@ export class Save {
 		this.travelLog = new TravelLog(saveFile.TravelLogData, this);
 
 		this.subscribeToMetadataChange = this.subscribeToMetadataChange.bind(this);
+		this.subscribeToSessionManagerChange =
+			this.subscribeToSessionManagerChange.bind(this);
 	}
 
 	mergeMetadata(metadata: Partial<SaveMetadata_0_1_0>) {
@@ -62,6 +67,13 @@ export class Save {
 	subscribeToMetadataChange(callback: (metadata: SaveMetadata_0_1_0) => void) {
 		this.MetadataChangeListeners.add(callback);
 		return () => this.MetadataChangeListeners.delete(callback);
+	}
+
+	subscribeToSessionManagerChange(
+		callback: (sessionManager: SaveSessionManager_0_1_0) => void
+	) {
+		this.SessionManagerChangeListeners.add(callback);
+		return () => this.SessionManagerChangeListeners.delete(callback);
 	}
 
 	serialize(): SaveFile_0_1_0 {

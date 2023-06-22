@@ -89,16 +89,6 @@ export interface SaveMetadata_0_1_0 {
 	DifficultyLevel: string; // TODO enum?
 
 	/**
-	 * The difficulty options of this save.
-	 */
-	DifficultyOptions: SaveDifficultyOptions_0_1_0;
-
-	/**
-	 * Not 100% sure what this is, but it's the same as DifficultyOptions.
-	 */
-	DefaultDifficultyOptions: SaveDifficultyOptions_0_1_0;
-
-	/**
 	 * Whether or not the first time player help is enabled.
 	 */
 	NewPlayerIsFTUEEnabled: boolean;

@@ -5,10 +5,11 @@ import {
 	EuiPanel,
 } from "@elastic/eui";
 import React, { useMemo } from "react";
-import { useSaveFileMetadata } from "../SaveFileContext";
+import { useSaveFileMetadata, useSessionManager } from "../hooks";
 
 export const Home: React.FC = () => {
 	const metadata = useSaveFileMetadata();
+	const sessionManager = useSessionManager();
 
 	const createdDate = useMemo(() => {
 		return new Date(metadata.SaveCreatedTime);
@@ -35,7 +36,7 @@ export const Home: React.FC = () => {
 				<EuiFlexGrid columns={3}>
 					<EuiFlexItem>
 						<EuiPanel>
-							<h2 className="text-xl font-bold mb-2">Save File</h2>
+							<h2 className="mb-2 text-xl font-bold">Save File</h2>
 							<div className="grid grid-cols-2 gap-1">
 								<span>Name</span>
 								<span>{metadata.Name}</span>
@@ -52,7 +53,7 @@ export const Home: React.FC = () => {
 					</EuiFlexItem>
 					<EuiFlexItem>
 						<EuiPanel>
-							<h2 className="text-xl font-bold mb-2">Campaign</h2>
+							<h2 className="mb-2 text-xl font-bold">Campaign</h2>
 							<div className="grid grid-cols-2 gap-1">
 								<span>Universe Time</span>
 								<span>{universeTime}</span>
@@ -69,43 +70,53 @@ export const Home: React.FC = () => {
 					</EuiFlexItem>
 					<EuiFlexItem>
 						<EuiPanel>
-							<h2 className="text-xl font-bold mb-2">Difficulty Options</h2>
+							<h2 className="mb-2 text-xl font-bold">Difficulty Options</h2>
 							<div className="grid grid-cols-2 gap-1">
 								<span>Allow Revert</span>
 								<span>
-									{metadata.DifficultyOptions.AllowRevert ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.AllowRevert ? "Yes" : "No"}
 								</span>
 								<span>Allow Quick Load</span>
 								<span>
-									{metadata.DifficultyOptions.AllowQuickLoad ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.AllowQuickLoad
+										? "Yes"
+										: "No"}
 								</span>
 								<span>Include Stock Vessels</span>
 								<span>
-									{metadata.DifficultyOptions.IncludeStockVessels
+									{sessionManager.DifficultyOptions.IncludeStockVessels
 										? "Yes"
 										: "No"}
 								</span>
 								<span>Docking Tolerance</span>
-								<span>{metadata.DifficultyOptions.DockingTolerance}</span>
+								<span>{sessionManager.DifficultyOptions.DockingTolerance}</span>
 								<span>CommNet Required</span>
 								<span>
-									{metadata.DifficultyOptions.CommNetRequired ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.CommNetRequired
+										? "Yes"
+										: "No"}
 								</span>
 								<span>Unbreakable Joints</span>
 								<span>
-									{metadata.DifficultyOptions.UnbreakableJoints ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.UnbreakableJoints
+										? "Yes"
+										: "No"}
 								</span>
 								<span>No Crash Damage</span>
 								<span>
-									{metadata.DifficultyOptions.NoCrashDamage ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.NoCrashDamage
+										? "Yes"
+										: "No"}
 								</span>
 								<span>Infinite Fuel</span>
 								<span>
-									{metadata.DifficultyOptions.InfiniteFuel ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.InfiniteFuel ? "Yes" : "No"}
 								</span>
 								<span>Infinite Electric Charge</span>
 								<span>
-									{metadata.DifficultyOptions.InfinitePower ? "Yes" : "No"}
+									{sessionManager.DifficultyOptions.InfinitePower
+										? "Yes"
+										: "No"}
 								</span>
 							</div>
 						</EuiPanel>
