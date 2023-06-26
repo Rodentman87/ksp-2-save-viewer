@@ -1,11 +1,12 @@
-import {
-	EuiEmptyPrompt,
-	EuiFlexGrid,
-	EuiFlexItem,
-	EuiPageTemplate,
-	EuiPanel,
-} from "@elastic/eui";
+import { EuiEmptyPrompt, EuiPageTemplate } from "@elastic/eui";
 import classNames from "classnames";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "components/ui/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
 import React, { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FixedSizeList } from "react-window";
@@ -62,17 +63,11 @@ export const VesselDetails: React.FC = () => {
 				)}
 				{vessel && (
 					<>
-						<EuiFlexGrid columns={3}>
-							<EuiFlexItem>
-								<VesselLocationCard vessel={vessel} />
-							</EuiFlexItem>
-							<EuiFlexItem>
-								<ResourceCard vessel={vessel} />
-							</EuiFlexItem>
-							<EuiFlexItem>
-								<MetadataCard vessel={vessel} />
-							</EuiFlexItem>
-						</EuiFlexGrid>
+						<div className="grid grid-cols-3 gap-4">
+							<VesselLocationCard vessel={vessel} />
+							<ResourceCard vessel={vessel} />
+							<MetadataCard vessel={vessel} />
+						</div>
 						<PartSelector vessel={vessel} />
 					</>
 				)}
@@ -125,13 +120,15 @@ const VesselLocationCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 	}
 
 	return (
-		<EuiPanel className="relative">
-			<h2 className="text-xl font-bold">Location</h2>
+		<Card className="relative">
+			<CardHeader>
+				<CardTitle>Location</CardTitle>
+			</CardHeader>
 			<div className="absolute top-4 right-4">
 				<VesselStateTag state={vessel.vesselState.Situation} />
 			</div>
-			{innerPanelData}
-		</EuiPanel>
+			<CardContent>{innerPanelData}</CardContent>
+		</Card>
 	);
 };
 
@@ -157,12 +154,16 @@ const ResourceCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 	}, [vessel.parts]);
 
 	return (
-		<EuiPanel className="flex flex-col gap-1">
-			<h2 className="text-xl font-bold">Resources</h2>
-			{resources.map(([resource, { current, total }]) => (
-				<ResourceBar name={resource} current={current} total={total} />
-			))}
-		</EuiPanel>
+		<Card>
+			<CardHeader>
+				<CardTitle>Resources</CardTitle>
+			</CardHeader>
+			<CardContent>
+				{resources.map(([resource, { current, total }]) => (
+					<ResourceBar name={resource} current={current} total={total} />
+				))}
+			</CardContent>
+		</Card>
 	);
 };
 
@@ -172,20 +173,25 @@ const MetadataCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 	}, [vessel]);
 
 	return (
-		<EuiPanel className="flex flex-col gap-1">
-			<h2 className="text-xl font-bold">General Info</h2>
-			<p>Part count: {vessel.parts.length}</p>
-			{stats && (
-				<>
-					<p>Distance Traveled: {formatMeters(stats.DistanceTravelled)}</p>
-					<p>
-						Highest G-Force: {formatNumberAtMostTwoDecimals(stats.MaxGeeForce)}g
-					</p>
-					<p>Highest Speed: {formatMeters(stats.MaxSpeed)}/s</p>
-					<p>Highest Altitude: {formatMeters(stats.MaxAltitude)}</p>
-				</>
-			)}
-		</EuiPanel>
+		<Card>
+			<CardHeader>
+				<CardTitle>General Info</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<p>Part count: {vessel.parts.length}</p>
+				{stats && (
+					<>
+						<p>Distance Traveled: {formatMeters(stats.DistanceTravelled)}</p>
+						<p>
+							Highest G-Force:{" "}
+							{formatNumberAtMostTwoDecimals(stats.MaxGeeForce)}g
+						</p>
+						<p>Highest Speed: {formatMeters(stats.MaxSpeed)}/s</p>
+						<p>Highest Altitude: {formatMeters(stats.MaxAltitude)}</p>
+					</>
+				)}
+			</CardContent>
+		</Card>
 	);
 };
 
@@ -252,19 +258,23 @@ const PartSelector: React.FC<{ vessel: Vessel_0_1 }> = ({ vessel }) => {
 						/>
 					);
 				})}
-				<EuiPanel
-					hasShadow={false}
-					hasBorder
-					className="flex flex-col col-span-2 gap-1"
-				>
-					<h2 className="text-xl font-bold">Part JSON</h2>
-					<details>
-						<summary>Click to expand</summary>
-						<pre>
-							<code>{JSON.stringify(selectedPart, null, 2)}</code>
-						</pre>
-					</details>
-				</EuiPanel>
+				<Card className="col-span-2">
+					<CardHeader>
+						<CardTitle>Part JSON</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Accordion type="single" collapsible>
+							<AccordionItem value="json">
+								<AccordionTrigger>Click to expand</AccordionTrigger>
+								<AccordionContent>
+									<pre>
+										<code>{JSON.stringify(selectedPart, null, 2)}</code>
+									</pre>
+								</AccordionContent>
+							</AccordionItem>
+						</Accordion>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
 	);

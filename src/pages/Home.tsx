@@ -1,9 +1,13 @@
+import { EuiPageTemplate } from "@elastic/eui";
 import {
-	EuiFlexGrid,
-	EuiFlexItem,
-	EuiPageTemplate,
-	EuiPanel,
-} from "@elastic/eui";
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "components/ui/card";
+import { Label } from "components/ui/label";
+import { Switch } from "components/ui/switch";
 import React, { useMemo } from "react";
 import { useSaveFileMetadata, useSessionManager } from "../hooks";
 
@@ -33,10 +37,15 @@ export const Home: React.FC = () => {
 				restrictWidth={false}
 			/>
 			<EuiPageTemplate.Section restrictWidth={false}>
-				<EuiFlexGrid columns={3}>
-					<EuiFlexItem>
-						<EuiPanel>
-							<h2 className="mb-2 text-xl font-bold">Save File</h2>
+				<div className="grid grid-cols-3 gap-4">
+					<Card>
+						<CardHeader>
+							<CardTitle>Save File</CardTitle>
+							<CardDescription>
+								Information about the file itself
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
 							<div className="grid grid-cols-2 gap-1">
 								<span>Name</span>
 								<span>{metadata.Name}</span>
@@ -49,11 +58,14 @@ export const Home: React.FC = () => {
 								<span>Save Type</span>
 								<span>{metadata.SavedGameType}</span>
 							</div>
-						</EuiPanel>
-					</EuiFlexItem>
-					<EuiFlexItem>
-						<EuiPanel>
-							<h2 className="mb-2 text-xl font-bold">Campaign</h2>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardHeader>
+							<CardTitle>Campaign</CardTitle>
+							<CardDescription>Campaign settings</CardDescription>
+						</CardHeader>
+						<CardContent>
 							<div className="grid grid-cols-2 gap-1">
 								<span>Universe Time</span>
 								<span>{universeTime}</span>
@@ -66,62 +78,91 @@ export const Home: React.FC = () => {
 								<span>First Time User Experience Enabled</span>
 								<span>{metadata.NewPlayerIsFTUEEnabled ? "Yes" : "No"}</span>
 							</div>
-						</EuiPanel>
-					</EuiFlexItem>
-					<EuiFlexItem>
-						<EuiPanel>
-							<h2 className="mb-2 text-xl font-bold">Difficulty Options</h2>
-							<div className="grid grid-cols-2 gap-1">
-								<span>Allow Revert</span>
-								<span>
-									{sessionManager.DifficultyOptions.AllowRevert ? "Yes" : "No"}
-								</span>
-								<span>Allow Quick Load</span>
-								<span>
-									{sessionManager.DifficultyOptions.AllowQuickLoad
-										? "Yes"
-										: "No"}
-								</span>
-								<span>Include Stock Vessels</span>
-								<span>
-									{sessionManager.DifficultyOptions.IncludeStockVessels
-										? "Yes"
-										: "No"}
-								</span>
-								<span>Docking Tolerance</span>
-								<span>{sessionManager.DifficultyOptions.DockingTolerance}</span>
-								<span>CommNet Required</span>
-								<span>
-									{sessionManager.DifficultyOptions.CommNetRequired
-										? "Yes"
-										: "No"}
-								</span>
-								<span>Unbreakable Joints</span>
-								<span>
-									{sessionManager.DifficultyOptions.UnbreakableJoints
-										? "Yes"
-										: "No"}
-								</span>
-								<span>No Crash Damage</span>
-								<span>
-									{sessionManager.DifficultyOptions.NoCrashDamage
-										? "Yes"
-										: "No"}
-								</span>
-								<span>Infinite Fuel</span>
-								<span>
-									{sessionManager.DifficultyOptions.InfiniteFuel ? "Yes" : "No"}
-								</span>
-								<span>Infinite Electric Charge</span>
-								<span>
-									{sessionManager.DifficultyOptions.InfinitePower
-										? "Yes"
-										: "No"}
-								</span>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardHeader>
+							<CardTitle>Difficulty Options</CardTitle>
+							<CardDescription>Difficulty options for the save</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="grid gap-1">
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.AllowRevert}
+										disabled
+										id="allow-revert"
+									/>
+									<Label htmlFor="allow-revert">Allow Revert</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.AllowQuickLoad}
+										disabled
+										id="quick-load"
+									/>
+									<Label htmlFor="quick-load">Allow Quick Load</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={
+											sessionManager.DifficultyOptions.IncludeStockVessels
+										}
+										disabled
+										id="include-stock"
+									/>
+									<Label htmlFor="include-stock">Include Stock Vessels</Label>
+								</div>
+								<div className="grid grid-cols-2">
+									<span>Docking Tolerance</span>
+									<span>
+										{sessionManager.DifficultyOptions.DockingTolerance}
+									</span>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.CommNetRequired}
+										disabled
+										id="comm-net"
+									/>
+									<Label htmlFor="comm-net">CommNet Required</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.UnbreakableJoints}
+										disabled
+										id="unbreakable-joints"
+									/>
+									<Label htmlFor="unbreakable-joints">Unbreakable Joints</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.NoCrashDamage}
+										disabled
+										id="no-crash-damage"
+									/>
+									<Label htmlFor="no-crash-damage">No Crash Damage</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.InfiniteFuel}
+										disabled
+										id="infinite-fuel"
+									/>
+									<Label htmlFor="infinite-fuel">Infinite Fuel</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.InfinitePower}
+										disabled
+										id="infinite-power"
+									/>
+									<Label htmlFor="infinite-power">Infinite Power</Label>
+								</div>
 							</div>
-						</EuiPanel>
-					</EuiFlexItem>
-				</EuiFlexGrid>
+						</CardContent>
+					</Card>
+				</div>
 			</EuiPageTemplate.Section>
 		</EuiPageTemplate>
 	);

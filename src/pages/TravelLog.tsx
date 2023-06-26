@@ -4,10 +4,10 @@ import {
 	EuiTimelineItemProps,
 } from "@elastic/eui";
 import React, { useMemo } from "react";
+import { useSaveFile } from "../SaveFileContext";
 import { formatTime } from "../helpers/formatting";
 import { Save } from "../save-helper/Save";
 import { TravelLogEvent } from "../save-helper/TravelLog";
-import { useSaveFile } from "../SaveFileContext";
 
 function eventToTimelineItem(
 	event: TravelLogEvent,
