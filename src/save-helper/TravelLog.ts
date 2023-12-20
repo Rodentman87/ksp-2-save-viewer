@@ -1,5 +1,7 @@
 import {
 	SaveTravelLogData_0_1_0,
+	SaveTravelLogFirstData_0_1_0,
+	SaveTravelLogFirsts_0_1_0,
 	SaveTravelLogObjectEvent_0_1_0,
 	SaveTravelLogObject_0_1_0,
 	SaveTravelLogStatistics_0_1_0,
@@ -9,6 +11,7 @@ import { Save } from "./Save";
 export class TravelLog {
 	objects = new Map<string, TravelLogObject>();
 	events: TravelLogEvent[];
+	firsts: TravelLogFirsts;
 
 	constructor(travelLogData: SaveTravelLogData_0_1_0, public save: Save) {
 		travelLogData.Objects.forEach((object) =>
@@ -17,6 +20,7 @@ export class TravelLog {
 		this.events = travelLogData.ObjectEvents.map(
 			(event) => new TravelLogEvent(event, this)
 		);
+		this.firsts = new TravelLogFirsts(travelLogData.Firsts, this);
 	}
 
 	serialize(): SaveTravelLogData_0_1_0 {
@@ -25,6 +29,7 @@ export class TravelLog {
 				object.serialize()
 			),
 			ObjectEvents: this.events.map((event) => event.serialize()),
+			Firsts: this.firsts.serialize(),
 		};
 	}
 }
@@ -76,6 +81,67 @@ export class TravelLogEvent {
 			EventKey: this.EventKey,
 			UT: this.UT,
 			FlightReportArgs: this.FlightReportArgs,
+		};
+	}
+}
+
+export class TravelLogFirsts {
+	SOIReached: TravelLogFirstData[];
+	DiscoverableReached: TravelLogFirstData[];
+	CBLanded: TravelLogFirstData[];
+	WalkedOn: TravelLogFirstData[];
+	CBLaunched: TravelLogFirstData[];
+
+	constructor(firsts: SaveTravelLogFirsts_0_1_0, public travelLog: TravelLog) {
+		this.SOIReached = firsts.SOIReached.map(
+			(soi) => new TravelLogFirstData(soi, this)
+		);
+		this.DiscoverableReached = firsts.DiscoverableReached.map(
+			(discoverable) => new TravelLogFirstData(discoverable, this)
+		);
+		this.CBLanded = firsts.CBLanded.map(
+			(landed) => new TravelLogFirstData(landed, this)
+		);
+		this.WalkedOn = firsts.WalkedOn.map(
+			(walked) => new TravelLogFirstData(walked, this)
+		);
+		this.CBLaunched = firsts.CBLaunched.map(
+			(launched) => new TravelLogFirstData(launched, this)
+		);
+	}
+
+	serialize(): SaveTravelLogFirsts_0_1_0 {
+		return {
+			SOIReached: this.SOIReached.map((soi) => soi.serialize()),
+			DiscoverableReached: this.DiscoverableReached.map((discoverable) =>
+				discoverable.serialize()
+			),
+			CBLanded: this.CBLanded.map((landed) => landed.serialize()),
+			WalkedOn: this.WalkedOn.map((walked) => walked.serialize()),
+			CBLaunched: this.CBLaunched.map((launched) => launched.serialize()),
+		};
+	}
+}
+
+export class TravelLogFirstData {
+	TravelObjectId: string;
+	ObjectKey: string;
+	UT: number;
+
+	constructor(
+		discoverable: SaveTravelLogFirstData_0_1_0,
+		public firsts: TravelLogFirsts
+	) {
+		this.TravelObjectId = discoverable.TravelObjectId;
+		this.ObjectKey = discoverable.ObjectKey;
+		this.UT = discoverable.UT;
+	}
+
+	serialize(): SaveTravelLogFirstData_0_1_0 {
+		return {
+			TravelObjectId: this.TravelObjectId,
+			ObjectKey: this.ObjectKey,
+			UT: this.UT,
 		};
 	}
 }

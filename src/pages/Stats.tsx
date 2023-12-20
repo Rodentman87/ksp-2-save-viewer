@@ -1,4 +1,5 @@
 import { EuiPageTemplate } from "@elastic/eui";
+import { FirstsTab } from "components/StatsTabs/FirstsTab";
 import React, { useMemo } from "react";
 import { OverviewTab } from "../components/StatsTabs/OverviewTab";
 import { VesselsTab } from "../components/StatsTabs/VesselsTab";
@@ -19,6 +20,11 @@ const tabs: MyTabProps[] = [
 		id: "vessels",
 		label: "Vessels",
 		content: <VesselsTab />,
+	},
+	{
+		id: "firsts",
+		label: "Firsts",
+		content: <FirstsTab />,
 	},
 ];
 

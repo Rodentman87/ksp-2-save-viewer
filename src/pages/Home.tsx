@@ -70,13 +70,13 @@ export const Home: React.FC = () => {
 								<span>Universe Time</span>
 								<span>{universeTime}</span>
 								<span>Mode</span>
-								<span>{metadata.CampaignMode}</span>
+								<span>{metadata.GameMode}</span>
 								<span>Type</span>
 								<span>{metadata.CampaignType}</span>
-								<span>Difficulty</span>
-								<span>{metadata.DifficultyLevel}</span>
 								<span>First Time User Experience Enabled</span>
 								<span>{metadata.NewPlayerIsFTUEEnabled ? "Yes" : "No"}</span>
+								<span>Science Available</span>
+								<span>{metadata.AvailableScience}</span>
 							</div>
 						</CardContent>
 					</Card>
@@ -87,6 +87,10 @@ export const Home: React.FC = () => {
 						</CardHeader>
 						<CardContent>
 							<div className="grid gap-1">
+								<div className="grid grid-cols-2">
+									<span>Difficulty Level</span>
+									<span>{sessionManager.DifficultyOptions.Difficulty}</span>
+								</div>
 								<div className="flex items-center space-x-2">
 									<Switch
 										checked={sessionManager.DifficultyOptions.AllowRevert}
@@ -137,14 +141,6 @@ export const Home: React.FC = () => {
 								</div>
 								<div className="flex items-center space-x-2">
 									<Switch
-										checked={sessionManager.DifficultyOptions.NoCrashDamage}
-										disabled
-										id="no-crash-damage"
-									/>
-									<Label htmlFor="no-crash-damage">No Crash Damage</Label>
-								</div>
-								<div className="flex items-center space-x-2">
-									<Switch
 										checked={sessionManager.DifficultyOptions.InfiniteFuel}
 										disabled
 										id="infinite-fuel"
@@ -158,6 +154,42 @@ export const Home: React.FC = () => {
 										id="infinite-power"
 									/>
 									<Label htmlFor="infinite-power">Infinite Power</Label>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={sessionManager.DifficultyOptions.HeatEnabled}
+										disabled
+										id="infinite-power"
+									/>
+									<Label htmlFor="infinite-power">Heat Enabled</Label>
+								</div>
+								<div className="grid grid-cols-2">
+									<span>Heat Scaling</span>
+									<span>{sessionManager.DifficultyOptions.HeatScaling}</span>
+								</div>
+								<div className="flex items-center space-x-2">
+									<Switch
+										checked={
+											sessionManager.DifficultyOptions.HeatPartDestruction
+										}
+										disabled
+										id="infinite-power"
+									/>
+									<Label htmlFor="infinite-power">Heat Part Desctruction</Label>
+								</div>
+								<div className="grid grid-cols-2">
+									<span>Starting Science</span>
+									<span>
+										{sessionManager.DifficultyOptions.StartingScience}
+									</span>
+								</div>
+								<div className="grid grid-cols-2">
+									<span>Science Rewards</span>
+									<span>{sessionManager.DifficultyOptions.ScienceRewards}</span>
+								</div>
+								<div className="grid grid-cols-2">
+									<span>Mission Rewards</span>
+									<span>{sessionManager.DifficultyOptions.MissionRewards}</span>
 								</div>
 							</div>
 						</CardContent>

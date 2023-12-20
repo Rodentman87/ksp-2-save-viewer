@@ -20,10 +20,12 @@ export interface Vessel_0_1 {
 	maneuverPlanState: ManeuverPlanState_0_1;
 	vesselState: VesselState_0_1;
 	kerbalState: KerbalState_0_1;
+	scienceStorageState: ScienceStorageState_0_1;
 	IsDebris: boolean;
 	SymmetrySets: SymmetrySets_0_1[];
 	location: Location_0_1;
 	parts: Part_0_1[];
+	CameraGimbalState: CameraGimbalState_0_1;
 }
 
 export interface AssemblyOABConfig_0_1 {
@@ -53,6 +55,13 @@ export interface StageInfo_0_1 {
 	PartIds: GuidWithDebugName_0_1_0[];
 	StageID: number;
 	IsActive: boolean;
+	DeltaVSituation: DeltaVSituation_0_1;
+}
+
+export interface DeltaVSituation_0_1 {
+	CelestialBody: null; // TODO
+	IsAtmosphere: boolean;
+	Altitute: number;
 }
 
 export interface PartOwnerState_0_1 {
@@ -60,7 +69,7 @@ export interface PartOwnerState_0_1 {
 }
 
 export interface ManeuverPlanState_0_1 {
-	maneuvers: Maneuver_0_1[]; // TODO get this type
+	maneuvers: Maneuver_0_1[]; // TODO verify this is still correct as of 0.2.0
 }
 
 export interface Maneuver_0_1 {
@@ -101,6 +110,7 @@ export interface VesselState_0_1 {
 	Situation: VesselSituations; // TODO enum?
 	ControlState: string; // TODO enum?
 	CommandModulesState: string; // TODO enum?
+	MaxAltitudeReachedDuringFlight: number;
 	CurrentControlOwnerPart: GuidWithDebugName_0_1_0;
 }
 
@@ -117,6 +127,35 @@ export interface KerbalState_0_1 {
 	CurrentLadderPartId: GuidWithDebugName_0_1_0 | null;
 	LadderUpPosOffsetSigned: number | null;
 	IsCarryingFlag: boolean | null;
+}
+
+export interface ScienceStorageState_0_1 {
+	ResearchReports: ResearchReport_0_1[]; // TODO
+	ActiveTransmittingReports: Record<string, unknown>; // TODO
+}
+
+export interface ResearchReport_0_1 {
+	ExperimentID: string;
+	ResearchLocationID: string;
+	ResearchReportType: string; // TODO enum?
+	Location: ResearchReportLocation_0_1;
+	InitialScienceValue: number;
+	TransmissionStatus: boolean;
+	TransmissionPercentage: number;
+	FlavorText: string;
+	ExperimentDisplayName: string;
+	EcRequired: number;
+	TimeRequired: number;
+	TransmissionSize: number;
+	ResearchReportKey: string;
+}
+
+export interface ResearchReportLocation_0_1 {
+	RequiresRegion: boolean;
+	BodyName: string;
+	ScienceSituation: string; // TODO enum?
+	ScienceRegion: string;
+	ResearchLocationId: string;
 }
 
 export interface Part_0_1 {
@@ -142,6 +181,7 @@ export interface PartState_0_1 {
 	isMirrored: boolean;
 	StageIndex: number;
 	FuelCrossfeed: boolean;
+	Temperature: number;
 	partPropertyOverrides: null; // TODO figure out this type
 }
 
@@ -186,6 +226,19 @@ export interface DataObject_0_1 {
 		storedValue: false; // TODO figure out this type
 	};
 	[extra: string]: unknown;
+}
+
+export interface CameraGimbalState_0_1 {
+	distance: number;
+	pitch: number;
+	heading: number;
+	roll: number;
+	localPitch: number;
+	localHeading: number;
+	pan: {
+		x: number;
+		y: number;
+	};
 }
 
 export interface ValueWithContextKey<T> {

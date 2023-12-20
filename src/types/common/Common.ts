@@ -36,6 +36,7 @@ export interface Location_0_1 {
 	surfaceLocation: null; // TODO figure out this type
 	rigidbodyState: RigidbodyState_0_1;
 	originatingSimObject: GuidWithDebugName_0_1_0;
+	launchSituationUnknown: boolean;
 }
 
 export interface Orbit_0_1 {

@@ -1,4 +1,4 @@
-import { EuiFieldText, EuiForm, EuiFormRow } from "@elastic/eui";
+import { EuiForm } from "@elastic/eui";
 import React, { useMemo } from "react";
 import { Vector3 } from "../../types/common/Common";
 import {
@@ -12,9 +12,7 @@ import { PartModuleCardBase } from "./PartModuleCard";
 type DragData = ModuleData_0_1 & {
 	DataObject: DataObject_0_1 & {
 		DragForceDirection: ValueWithContextKey<Vector3>;
-		DragForceMagnitude: ValueWithContextKey<number>;
 		LiftForceDirection: ValueWithContextKey<Vector3>;
-		LiftForceMagnitude: ValueWithContextKey<number>;
 		ReferenceArea: ValueWithContextKey<number>;
 		ExposedArea: ValueWithContextKey<number>;
 		TotalArea: ValueWithContextKey<number>;
@@ -33,20 +31,20 @@ export const Drag: React.FC<{
 	return (
 		<PartModuleCardBase name="Drag" partModuleState={partModuleState}>
 			<EuiForm fullWidth>
-				<EuiFormRow label="Drag Force" display="columnCompressed" isDisabled>
+				{/* <EuiFormRow label="Drag Force" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={dragData.DataObject.DragForceMagnitude.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
-				<EuiFormRow label="Lift Force" display="columnCompressed" isDisabled>
+				</EuiFormRow> */}
+				{/* <EuiFormRow label="Lift Force" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={dragData.DataObject.LiftForceMagnitude.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
+				</EuiFormRow> */}
 			</EuiForm>
 		</PartModuleCardBase>
 	);

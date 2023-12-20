@@ -150,7 +150,7 @@ export const NavBar: React.FC = () => {
 			);
 		}
 		return items;
-	}, [location.pathname, save, navigate, toggleTheme]);
+	}, [location.pathname, save, navigate, toggleTheme, setSaveFile]);
 
 	return (
 		<>

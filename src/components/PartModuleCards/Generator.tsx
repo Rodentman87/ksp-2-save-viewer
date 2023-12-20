@@ -1,4 +1,4 @@
-import { EuiFieldText, EuiForm, EuiFormRow, EuiSwitch } from "@elastic/eui";
+import { EuiForm, EuiFormRow, EuiSwitch } from "@elastic/eui";
 import React, { useMemo } from "react";
 import {
 	DataObject_0_1,
@@ -10,14 +10,10 @@ import { PartModuleCardBase } from "./PartModuleCard";
 
 type GeneratorData = ModuleData_0_1 & {
 	DataObject: DataObject_0_1 & {
-		GeneratorOutput: ValueWithContextKey<number>;
-		HeatGenerated: ValueWithContextKey<number>;
-		DisplayStatus: ValueWithContextKey<string>;
 		GeneratorEnabled: ValueWithContextKey<boolean>;
-		DisplayLifetime: ValueWithContextKey<string>;
 		GeneratorIsActive: boolean;
 		IsDecaying: boolean;
-		CurrentDecayLifetime: number;
+		CurrentDecayTime: number;
 		RequestConfig: {
 			FlowResource: {
 				Value: number;
@@ -44,15 +40,15 @@ export const Generator: React.FC<{
 	return (
 		<PartModuleCardBase name="Generator" partModuleState={partModuleState}>
 			<EuiForm fullWidth>
-				<EuiFormRow label="Output" display="columnCompressed" isDisabled>
+				{/* <EuiFormRow label="Output" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={generatorData.DataObject.GeneratorOutput.storedValue}
 						readOnly
 						append="EC/s"
 					/>
-				</EuiFormRow>
-				<EuiFormRow
+				</EuiFormRow> */}
+				{/* <EuiFormRow
 					label="Heat Generated"
 					display="columnCompressed"
 					isDisabled
@@ -62,14 +58,14 @@ export const Generator: React.FC<{
 						value={generatorData.DataObject.HeatGenerated.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
-				<EuiFormRow label="Status" display="columnCompressed" isDisabled>
+				</EuiFormRow> */}
+				{/* <EuiFormRow label="Status" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={generatorData.DataObject.DisplayStatus.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
+				</EuiFormRow> */}
 				<EuiFormRow
 					label="Enabled"
 					display="columnCompressedSwitch"
@@ -86,13 +82,13 @@ export const Generator: React.FC<{
 						onChange={() => {}}
 					/>
 				</EuiFormRow>
-				<EuiFormRow label="Lifetime" display="columnCompressed" isDisabled>
+				{/* <EuiFormRow label="Lifetime" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={generatorData.DataObject.DisplayLifetime.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
+				</EuiFormRow> */}
 			</EuiForm>
 		</PartModuleCardBase>
 	);

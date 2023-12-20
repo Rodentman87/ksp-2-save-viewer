@@ -74,6 +74,8 @@ export const Flags: React.FC = () => {
 			<EuiPageTemplate.Section restrictWidth={false}>
 				{saveFile.plantedFlags.length === 0 ? (
 					<EuiEmptyPrompt
+						iconType="flag"
+						iconColor="danger"
 						title={<h2>No Flags</h2>}
 						body={<span>Go out and plant some!</span>}
 					/>

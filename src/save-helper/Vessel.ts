@@ -3,17 +3,19 @@ import { SymmetrySets_0_1 } from "../types/vessel/SymmetrySets-0-1";
 import {
 	AssemblyDefinition_0_1,
 	AssemblyOABConfig_0_1,
+	CameraGimbalState_0_1,
 	KerbalState_0_1,
 	ManeuverPlanState_0_1,
 	PartOwnerState_0_1,
 	Part_0_1,
+	ScienceStorageState_0_1,
 	StagingState_0_1,
 	VesselState_0_1,
 	Vessel_0_1,
 } from "../types/vessel/VesselInfo-0-1";
 import { Save } from "./Save";
 
-export class Vessel {
+export class Vessel implements Vessel_0_1 {
 	Version: "0.1";
 	Guid: GuidWithDebugName_0_1_0;
 	OwnerPlayerGuidString: string;
@@ -28,8 +30,10 @@ export class Vessel {
 	kerbalState: KerbalState_0_1;
 	IsDebris: boolean;
 	SymmetrySets: SymmetrySets_0_1[];
+	CameraGimbalState: CameraGimbalState_0_1;
 	location: Location_0_1;
 	parts: Part_0_1[];
+	scienceStorageState: ScienceStorageState_0_1;
 
 	constructor(vessel: Vessel_0_1, public save: Save) {
 		this.Version = vessel.Version;
@@ -46,8 +50,10 @@ export class Vessel {
 		this.kerbalState = vessel.kerbalState;
 		this.IsDebris = vessel.IsDebris;
 		this.SymmetrySets = vessel.SymmetrySets;
+		this.CameraGimbalState = vessel.CameraGimbalState;
 		this.location = vessel.location;
 		this.parts = vessel.parts;
+		this.scienceStorageState = vessel.scienceStorageState;
 	}
 
 	serialize(): Vessel_0_1 {
@@ -66,8 +72,10 @@ export class Vessel {
 			kerbalState: this.kerbalState,
 			IsDebris: this.IsDebris,
 			SymmetrySets: this.SymmetrySets,
+			CameraGimbalState: this.CameraGimbalState,
 			location: this.location,
 			parts: this.parts,
+			scienceStorageState: this.scienceStorageState,
 		};
 	}
 

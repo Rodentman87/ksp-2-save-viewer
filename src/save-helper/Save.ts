@@ -4,7 +4,6 @@ import {
 	SaveFile_0_1_0,
 	SaveKerbalData_0_1_0,
 	SaveMetadata_0_1_0,
-	SaveMissionData_0_1_0,
 	SaveProperties_0_1_0,
 	SaveSessionManager_0_1_0,
 } from "../types/save/SaveFile-0-1-0";
@@ -28,7 +27,6 @@ export class Save {
 	agencies: Agency[];
 	CampaignPlayers: SaveCampaignPlayer_0_1_0[];
 	vessels: Vessel[];
-	missionData: SaveMissionData_0_1_0[];
 	ColonyData: SaveColonyData_0_1_0;
 	KerbalData: SaveKerbalData_0_1_0;
 	plantedFlags: PlantedFlag[];
@@ -43,7 +41,6 @@ export class Save {
 		this.agencies = saveFile.Agencies.map((agency) => new Agency(agency, this));
 		this.CampaignPlayers = saveFile.CampaignPlayers;
 		this.vessels = saveFile.Vessels.map((vessel) => new Vessel(vessel, this));
-		this.missionData = saveFile.missionData;
 		this.ColonyData = saveFile.ColonyData;
 		this.KerbalData = saveFile.KerbalData;
 		this.plantedFlags = saveFile.PlantedFlags.map(
@@ -86,7 +83,6 @@ export class Save {
 			Agencies: this.agencies.map((agency) => agency.serialize()),
 			CampaignPlayers: this.CampaignPlayers,
 			Vessels: this.vessels.map((vessel) => vessel.serialize()),
-			missionData: this.missionData,
 			ColonyData: this.ColonyData,
 			KerbalData: this.KerbalData,
 			PlantedFlags: this.plantedFlags.map((flag) => flag.serialize()),

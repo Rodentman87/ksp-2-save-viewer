@@ -20,7 +20,6 @@ type ReactionWheelData = ModuleData_0_1 & {
 		WheelAuthority: ValueWithContextKey<number>;
 		WheelActuatorMode: ValueWithContextKey<string>;
 		ToggleTorque: ValueWithContextKey<boolean>;
-		StatusText: ValueWithContextKey<string>;
 		WheelState: string;
 		HasResourcesToOperate: boolean;
 		HasPendingResourceActivity: boolean;
@@ -85,13 +84,13 @@ export const ReactionWheel: React.FC<{
 						onChange={() => {}}
 					/>
 				</EuiFormRow>
-				<EuiFormRow label="Status Text" display="columnCompressed" isDisabled>
+				{/* <EuiFormRow label="Status Text" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={reactionWheelData.DataObject.StatusText.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
+				</EuiFormRow> */}
 				<EuiFormRow label="Wheel State" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed

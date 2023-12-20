@@ -1,4 +1,4 @@
-import { EuiIcon, EuiPageTemplate } from "@elastic/eui";
+import { EuiCallOut, EuiIcon, EuiPageTemplate } from "@elastic/eui";
 import { SetSaveFileContext } from "App";
 import { Button } from "components/ui/button";
 import {
@@ -93,7 +93,19 @@ export const SaveSelect: React.FC = () => {
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<div className="grid w-full max-w-sm items-center gap-1.5">
+									<EuiCallOut
+										title="WARNING for pre-0.2.0 saves"
+										color="warning"
+										iconType="warning"
+									>
+										<p className="text-sm text-justify w-96">
+											Due to changes with the save format of KSP 2 in version
+											0.2.0, save files from before 0.2.0 will not work with
+											this tool anymore, please load the save in version 0.2.0
+											or later and save it again.
+										</p>
+									</EuiCallOut>
+									<div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
 										<Label htmlFor="save-file">Save File</Label>
 										<Input
 											id="save-file"

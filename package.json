@@ -4,7 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@elastic/datemath": "^5.0.3",
-		"@elastic/eui": "^75.1.2",
+		"@elastic/eui": "91.3.0",
 		"@emotion/css": "^11.10.6",
 		"@emotion/react": "^11.10.6",
 		"@radix-ui/react-accordion": "^1.1.2",

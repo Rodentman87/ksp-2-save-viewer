@@ -117,6 +117,12 @@ const VesselLocationCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 				</div>
 			);
 			break;
+		case "Flying":
+			innerPanelData = (
+				<div>
+					<p>Flying over {vessel.location.serializedOrbit.referenceBodyGuid}</p>
+				</div>
+			);
 	}
 
 	return (
@@ -178,6 +184,7 @@ const MetadataCard: React.FC<{ vessel: Vessel }> = ({ vessel }) => {
 				<CardTitle>General Info</CardTitle>
 			</CardHeader>
 			<CardContent>
+				<p>Launched From: {vessel.vesselState.launchLocation}</p>
 				<p>Part count: {vessel.parts.length}</p>
 				{stats && (
 					<>

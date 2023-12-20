@@ -1,4 +1,4 @@
-import { EuiFieldText, EuiForm, EuiFormRow, EuiRange } from "@elastic/eui";
+import { EuiForm, EuiFormRow, EuiRange } from "@elastic/eui";
 import React, { useMemo } from "react";
 import { Vector3 } from "../../types/common/Common";
 import {
@@ -13,26 +13,26 @@ type EngineData = ModuleData_0_1 & {
 	DataObject: DataObject_0_1 & {
 		IndependentThrottle: ValueWithContextKey<boolean>;
 		IndependentThrottlePercentage: ValueWithContextKey<number>;
-		EngineModeString: ValueWithContextKey<string>;
 		activeEngineMode: ValueWithContextKey<string>;
+		EngineStatePriorChangeMode: string;
+		EngingeChangingToMode: number;
+		EngineAutoSwitchMode: ValueWithContextKey<boolean>;
 		thrustPercentage: ValueWithContextKey<number>;
 		FinalThrustValue: number;
 		RealISPValue: number;
-		State: string;
-		StatusString: ValueWithContextKey<string>;
-		StatusISPString: ValueWithContextKey<number>;
 		stagingOn: ValueWithContextKey<boolean>;
 		staged: boolean;
 		Flameout: boolean;
 		EngineIgnited: boolean;
 		EngineShutdown: boolean;
-		HeatProduced: ValueWithContextKey<number>;
 		currentThrottle: number;
 		thrustCurveDisplay: number;
 		thrustCurveRatio: number;
 		EngineSpool: number;
 		ThrustDirRelativePartWorldSpace: Vector3;
 		currentEngineModeIndex: number;
+		State: string;
+		IsOperational: boolean;
 	};
 };
 
@@ -48,13 +48,13 @@ export const Engine: React.FC<{
 	return (
 		<PartModuleCardBase name="Engine" partModuleState={partModuleState}>
 			<EuiForm fullWidth>
-				<EuiFormRow label="State" display="columnCompressed" isDisabled>
+				{/* <EuiFormRow label="State" display="columnCompressed" isDisabled>
 					<EuiFieldText
 						compressed
 						value={engineData.DataObject.StatusString.storedValue}
 						readOnly
 					/>
-				</EuiFormRow>
+				</EuiFormRow> */}
 				<EuiFormRow
 					label="Current Throttle"
 					display="columnCompressed"

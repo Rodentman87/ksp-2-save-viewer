@@ -18,7 +18,6 @@ export interface SaveFile_0_1_0 {
 	Agencies: SaveAgency_0_1_0[];
 	CampaignPlayers: SaveCampaignPlayer_0_1_0[];
 	Vessels: Vessel_0_1[];
-	missionData: SaveMissionData_0_1_0[];
 	ColonyData: SaveColonyData_0_1_0;
 	KerbalData: SaveKerbalData_0_1_0;
 	PlantedFlags: SavePlantedFlag_0_1_0[];
@@ -74,9 +73,14 @@ export interface SaveMetadata_0_1_0 {
 	SavedGameType: SaveTypes_0_1_0;
 
 	/**
+	 * The amount of science points available to the player
+	 */
+	AvailableScience: number;
+
+	/**
 	 * The campaign mode of this save (sandbox).
 	 */
-	CampaignMode: SaveCampaignModes_0_1_0;
+	GameMode: SaveGameMode_0_1_0;
 
 	/**
 	 * The campaign type of this save (single player).
@@ -95,23 +99,8 @@ export interface SaveMetadata_0_1_0 {
 }
 
 export type SaveTypes_0_1_0 = "Manual" | "Auto" | "Quick";
-export type SaveCampaignModes_0_1_0 = "Sandbox"; // May need to expand this later, depending on if the save version increments first
+export type SaveGameMode_0_1_0 = "Sandbox" | "ExplorationMode"; // May need to expand this later, depending on if the save version increments first
 export type SaveCampaignTypes_0_1_0 = "SinglePlayer"; // May need to expand this later, depending on if the save version increments first
-
-export interface SaveDifficultyOptions_0_1_0 {
-	name: string;
-	Difficulty: string; // TODO enum?
-	Mode: SaveCampaignModes_0_1_0;
-	AllowRevert: boolean;
-	AllowQuickLoad: boolean;
-	IncludeStockVessels: boolean;
-	DockingTolerance: number;
-	CommNetRequired: boolean;
-	UnbreakableJoints: boolean;
-	NoCrashDamage: boolean;
-	InfiniteFuel: boolean;
-	InfinitePower: boolean;
-}
 
 // #endregion
 
@@ -123,14 +112,11 @@ export interface SaveProperties_0_1_0 {
 
 export interface SaveBoolProperties_0_1_0 {
 	NoCrashDamage: boolean;
-	InfinitePropellant: boolean;
-	InfiniteElectricity: boolean;
-	UnbreakableJoints: boolean;
-	UnbreakableParts: boolean;
 	DisableGravity: boolean;
 	DisableAerodynamics: boolean;
 	DisableThermodynamics: boolean;
 	IgnoreMaxTemp: boolean;
+	UnlockAllParts: boolean;
 }
 
 // #endregion
@@ -142,6 +128,24 @@ export interface SaveSessionManager_0_1_0 {
 	DefaultDifficultyOptions: SaveDifficultyOptions_0_1_0;
 }
 
+export interface SaveDifficultyOptions_0_1_0 {
+	Difficulty: string; // TODO enum?
+	AllowRevert: boolean;
+	AllowQuickLoad: boolean;
+	IncludeStockVessels: boolean;
+	DockingTolerance: number;
+	CommNetRequired: boolean;
+	UnbreakableJoints: boolean;
+	InfiniteFuel: boolean;
+	InfinitePower: boolean;
+	HeatEnabled: boolean;
+	HeatScaling: number;
+	HeatPartDestruction: boolean;
+	StartingScience: number;
+	ScienceRewards: number;
+	MissionRewards: number;
+}
+
 // #endregion
 
 // #region SaveAgencies_0_1_0
@@ -149,6 +153,9 @@ export interface SaveSessionManager_0_1_0 {
 export interface SaveAgency_0_1_0 {
 	AgencyId: number;
 	AgencyName: string;
+	SubmittedResearchReports: null[]; // TODO
+	SciencePointCapacity: number;
+	AdditionalSciencePoints: number;
 	ColorBase: Color;
 	ColorAccent: Color;
 	FlagSpriteLocation: string;
@@ -168,6 +175,8 @@ export interface SaveCampaignPlayer_0_1_0 {
 	AgencyId: number;
 	ActiveVesselName: string;
 	ActiveVesselGuid: GuidWithDebugName_0_1_0;
+	UnlockedTechNodes: string[];
+	AllocatedSciencePoints: number;
 	ActiveCameraGroup: string; // TODO enum?
 	ActiveCameraInfo: SaveActiveCameraInfo_0_1_0;
 	ActiveLocalSpaceCB: string; // TODO enum?
@@ -178,11 +187,16 @@ export interface SaveCampaignPlayer_0_1_0 {
 	CopyLocation: null; // TODO figure out this type
 	FavoritedParts: Record<string, 0>;
 	FTUE: boolean;
-	MissionData: SaveMissionData_0_1_0[];
+	MissionSaveData: SaveMissionData_0_1_0[]; // TODO
 	/**
 	 * A comma-separated list of tutorials that have been completed.
 	 */
-	CompletedTutorials: string;
+	CompletedTutorialList: string;
+	/**
+	 * A comma-separated list of FTUE thingies that have been completed.
+	 */
+	CompletedFTUEList: string;
+	TrackedMissions: SaveTrackedMissions_0_1_0[];
 	PartColorBase: Color;
 	PartColorAccent: Color;
 }
@@ -195,19 +209,30 @@ export interface SaveActiveCameraInfo_0_1_0 {
 	Pitch: number;
 }
 
+export interface SaveTrackedMissions_0_1_0 {
+	MissionOwner: string;
+	OwnerId: number;
+	MissionIDs: string[];
+}
+
 // #endregion
 
 // #region SaveMissionData_0_1_0
 
 export interface SaveMissionData_0_1_0 {
-	ID: string;
-	missionStages: SaveMissionStage_0_1_0[]; //TODO
+	MissionID: string;
+	CompletedStages: SaveMissionStage_0_1_0[];
+	IsNew: boolean;
+	IsActive: boolean;
+	Available: boolean;
+	Completed: boolean;
+	TurnedIn: boolean;
 }
 
 export interface SaveMissionStage_0_1_0 {
-	StageID: number;
-	completed: boolean;
-	active: boolean;
+	PlayerId: number;
+	StageIds: null; // TODO figure out this type
+	CurrentStageIndex: number;
 }
 
 // #endregion
@@ -225,8 +250,9 @@ export interface SaveColonyData_0_1_0 {
 
 export interface SaveKerbalData_0_1_0 {
 	Kerbals: Record<string, SaveKerbal_0_1_0>;
+	TotalKerbalSpawnCount: number;
 	CustomKerbals: Record<string, string>;
-	CustomKerbalRefresh: Record<string, string>;
+	VeteranKerbalRefresh: Record<string, unknown>; // TODO
 }
 
 export interface SaveKerbal_0_1_0 {
@@ -276,6 +302,21 @@ export interface SaveFlagState_0_1_0 {
 export interface SaveTravelLogData_0_1_0 {
 	Objects: SaveTravelLogObject_0_1_0[];
 	ObjectEvents: SaveTravelLogObjectEvent_0_1_0[];
+	Firsts: SaveTravelLogFirsts_0_1_0; // Added in 0.2.0
+}
+
+export interface SaveTravelLogFirsts_0_1_0 {
+	SOIReached: SaveTravelLogFirstData_0_1_0[];
+	DiscoverableReached: SaveTravelLogFirstData_0_1_0[];
+	CBLanded: SaveTravelLogFirstData_0_1_0[];
+	WalkedOn: SaveTravelLogFirstData_0_1_0[];
+	CBLaunched: SaveTravelLogFirstData_0_1_0[];
+}
+
+export interface SaveTravelLogFirstData_0_1_0 {
+	TravelObjectId: string;
+	ObjectKey: string;
+	UT: number;
 }
 
 export interface SaveTravelLogObject_0_1_0 {
