@@ -23,6 +23,7 @@ import { RCS } from "./RCS";
 import { ReactionWheel } from "./ReactionWheel";
 import { ResourceCapacities } from "./ResourceCapacities";
 import { ResourceIntake } from "./ResourceIntake";
+import { ScienceExperiment } from "./ScienceExperiment";
 import { SolarPanel } from "./SolarPanel";
 import { WheelBase } from "./WheelBase";
 import { WheelBrakes } from "./WheelBrakes";
@@ -85,6 +86,8 @@ export const PartModuleCard: React.FC<{
 			return <ControlSurface partModuleState={partModuleState} />;
 		case "PartComponentModule_ProceduralPart":
 			return <ProceduralPart partModuleState={partModuleState} />;
+		case "PartComponentModule_ScienceExperiment":
+			return <ScienceExperiment partModuleState={partModuleState} />;
 
 		// TODO local data for these parts doesn't seem to exist, may be able to get data from elsewhere
 		case "PartComponentModule_CrewedInterior":

@@ -13,7 +13,13 @@ import { formatMeters, formatSpeed } from "../../helpers/formatting";
 export function OverviewTab() {
 	const saveFile = useSaveFile();
 
-	const { totalDistance, highestSpeed, highestGroundSpeed } = useMemo(() => {
+	const {
+		totalDistance,
+		highestSpeed,
+		highestGroundSpeed,
+		celestialBodiesLandedOn,
+		discoverablesFound,
+	} = useMemo(() => {
 		let totalDistance = 0;
 		let highestSpeed = 0;
 		let highestGroundSpeed = 0;
@@ -30,6 +36,8 @@ export function OverviewTab() {
 			totalDistance,
 			highestSpeed,
 			highestGroundSpeed,
+			celestialBodiesLandedOn: saveFile.travelLog.firsts.CBLanded.length,
+			discoverablesFound: saveFile.travelLog.firsts.DiscoverableReached.length,
 		};
 	}, [saveFile]);
 
@@ -80,6 +88,40 @@ export function OverviewTab() {
 									<span>
 										<EuiIcon type="clock" color="success" /> Highest Ground
 										Speed Achieved
+									</span>
+								</EuiText>
+							}
+							textAlign="center"
+						/>
+					</EuiPanel>
+				</EuiFlexItem>
+				<EuiFlexItem>
+					<EuiPanel>
+						<EuiStat
+							titleColor="success"
+							title={celestialBodiesLandedOn}
+							description={
+								<EuiText>
+									<span>
+										<EuiIcon type="globe" color="success" /> Celestial Bodies
+										Landed On
+									</span>
+								</EuiText>
+							}
+							textAlign="center"
+						/>
+					</EuiPanel>
+				</EuiFlexItem>
+				<EuiFlexItem>
+					<EuiPanel>
+						<EuiStat
+							titleColor="success"
+							title={discoverablesFound}
+							description={
+								<EuiText>
+									<span>
+										<EuiIcon type="mapMarker" color="success" /> Discoverables
+										Found
 									</span>
 								</EuiText>
 							}

@@ -18,6 +18,7 @@ export * from "./RCS";
 export * from "./ReactionWheel";
 export * from "./ResourceCapacities";
 export * from "./ResourceIntake";
+export * from "./ScienceExperiment";
 export * from "./SolarPanel";
 export * from "./WheelBase";
 export * from "./WheelBrakes";
